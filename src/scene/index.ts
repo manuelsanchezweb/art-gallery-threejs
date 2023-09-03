@@ -4,6 +4,7 @@ import { createCube } from '../geometry/cube'
 import { createAmbientLight } from '../lights/ambientLight'
 import { createSunLight } from '../lights/sunLight'
 import { createFloor } from '../geometry/floor'
+import { createWalls } from '../geometry/walls'
 
 export const setupScene = () => {
   const scene = new THREE.Scene()
@@ -29,6 +30,10 @@ export const setupScene = () => {
   // Add floor to scene
   const floor = createFloor()
   scene.add(floor)
+
+  // Add walls to scene
+  const walls = createWalls()
+  scene.add(walls)
 
   return { scene, camera, cube }
 }
