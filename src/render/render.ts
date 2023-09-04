@@ -8,16 +8,23 @@ import { displayPaintingInfo, hidePaintingInfo } from '../ui/infoMedia'
 const renderer = new THREE.WebGLRenderer({ antialias: false })
 renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.setClearColor(0xffffff, 1)
-
 document.body.appendChild(renderer.domElement)
 
 export const startRendering = (
   scene: THREE.Scene,
   clock: THREE.Clock,
-  camera: THREE.Camera,
+  camera: THREE.PerspectiveCamera,
   controls: any, // replace with the actual type
   paintings: THREE.Group[] // replace with the actual type
 ) => {
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight
+    camera.updateProjectionMatrix()
+    renderer.setSize(window.innerWidth, window.innerHeight)
+  }
+
+  window.addEventListener('resize', onWindowResize, false)
+
   // Render loop
   const animate = () => {
     const delta = clock.getDelta()

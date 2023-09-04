@@ -84,11 +84,13 @@ export const addHowToControls = (
   controls: PointerLockControls
 ) => {
   const playButton = document.getElementById('play_button')
+  const overlay = document.getElementById('overlay')
 
   function startExperience() {
     clock.start()
     controls.lock()
     hideMenu()
+    overlay?.classList.remove('active')
   }
   playButton?.addEventListener('click', startExperience)
 
@@ -102,6 +104,7 @@ export const addHowToControls = (
     const menu = document.getElementById('menu') as HTMLDivElement
     if (!menu) return
     menu.style.display = 'block'
+    overlay?.classList.add('active')
   }
 
   controls.addEventListener('unlock', showMenu)
