@@ -22,7 +22,7 @@ const controls = new PointerLockControls(camera, document.body)
 const clock = new THREE.Clock()
 
 addHowToControls(clock, controls)
-addKeyboardControls()
+addKeyboardControls(controls)
 
 // Render loop
 const animate = () => {

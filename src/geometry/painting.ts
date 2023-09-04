@@ -1,5 +1,7 @@
 import * as THREE from 'three'
 
+type Rotation = 'front' | 'left' | 'right' | 'back'
+
 interface MediaProps {
   mediaUrl: string
   width: number
@@ -8,8 +10,6 @@ interface MediaProps {
   isVideo?: boolean
   position: THREE.Vector3
 }
-
-type Rotation = 'front' | 'left' | 'right'
 
 export function createMedia(props: MediaProps): THREE.Group {
   const { mediaUrl, width, height, position, rotationSide, isVideo } = props
@@ -60,6 +60,7 @@ export function createMedia(props: MediaProps): THREE.Group {
   // Set rotation
   if (rotation === 'left') group.rotation.y = Math.PI / 2
   if (rotation === 'right') group.rotation.y = -Math.PI / 2
+  if (rotation === 'back') group.rotation.y = Math.PI
 
   return group
 }

@@ -5,12 +5,21 @@ import { checkCollision } from './boundaries'
 import { KeysPressed } from '../types/types'
 import { KEYSPRESSED, WALLS } from '../settings/settings'
 
-const MOVEMENT_SPEED = 5.0
+const MOVEMENT_SPEED = 8.0
+const JUMP_FORCE = 6.0
+const GRAVITY = -9.8 // Upwards direction is positive, so gravity is negative.
+let canJump = false
+let velocity = new THREE.Vector3()
 
-export const addKeyboardControls = () => {
+export const addKeyboardControls = (controls: PointerLockControls) => {
   document.addEventListener('keydown', (event) => {
     if (event.key in KEYSPRESSED) {
       KEYSPRESSED[event.key as keyof KeysPressed] = true
+    }
+
+    if (event.key === ' ' && canJump === true) {
+      velocity.y += JUMP_FORCE // Adjust the '20' to set the jump speed.
+      canJump = false
     }
   })
 
@@ -18,6 +27,14 @@ export const addKeyboardControls = () => {
     if (event.key in KEYSPRESSED) {
       KEYSPRESSED[event.key as keyof KeysPressed] = false
     }
+  })
+
+  controls.addEventListener('lock', function () {
+    canJump = true
+  })
+
+  controls.addEventListener('unlock', function () {
+    canJump = false
   })
 }
 
@@ -30,6 +47,8 @@ export const updateMovement = (
   const moveSpeed = MOVEMENT_SPEED * delta
   const previousPosition = camera.position.clone()
   const wallsFromScene = scene.getObjectByName(WALLS) as THREE.Group
+
+  velocity.y += GRAVITY * delta
 
   if (KEYSPRESSED.w || KEYSPRESSED.ArrowUp) {
     controls.moveForward(moveSpeed)
@@ -47,8 +66,16 @@ export const updateMovement = (
     controls.moveRight(moveSpeed)
   }
 
+  controls.getObject().position.y += velocity.y * delta
+
   if (checkCollision(camera, wallsFromScene)) {
     camera.position.copy(previousPosition)
+  }
+
+  if (controls.getObject().position.y <= 0) {
+    velocity.y = 0
+    controls.getObject().position.y = 0
+    canJump = true
   }
 }
 
