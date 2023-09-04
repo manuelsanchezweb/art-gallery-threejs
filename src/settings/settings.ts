@@ -22,6 +22,15 @@ export const ASSETS = {
 export const ARTWORK = {
   A0: './artworks/0.jpg',
   A1: './artworks/1.jpg',
+  A2: './artworks/2.jpg',
+  A3: './artworks/3.jpg',
+  A4: './artworks/4.jpg',
+}
+
+export const PROJECTS = {
+  P0: './projects/game.png',
+  P1: './projects/capcom-advisor.gif',
+  P2: './projects/water.mp4',
 }
 
 export const WALLS = 'walls'

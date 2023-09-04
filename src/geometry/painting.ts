@@ -1,55 +1,65 @@
 import * as THREE from 'three'
 
-interface PaintingProps {
-  imageUrl: string
+interface MediaProps {
+  mediaUrl: string
   width: number
   height: number
-  position: Position
+  rotationSide?: Rotation
+  isVideo?: boolean
+  position: THREE.Vector3
 }
 
-interface Position {
-  x: number
-  y: number
-  z: number
-}
+type Rotation = 'front' | 'left' | 'right'
 
-export function createPainting(props: PaintingProps): THREE.Group {
-  const { imageUrl, width, height, position } = props
+export function createMedia(props: MediaProps): THREE.Group {
+  const { mediaUrl, width, height, position, rotationSide, isVideo } = props
 
-  const textureLoader = new THREE.TextureLoader()
-  const paintingTexture = textureLoader.load(imageUrl)
+  let mediaTexture
+  let rotation = rotationSide || 'front'
 
-  const paintingMaterial = new THREE.MeshBasicMaterial({
-    map: paintingTexture,
+  if (isVideo) {
+    const video = document.createElement('video')
+    video.src = mediaUrl
+    video.loop = true
+    video.muted = true // Optionally mute the video
+
+    // Wait for the video to load
+    video.addEventListener('loadeddata', function () {
+      // Explicitly call play method
+      video.play().catch((e) => {
+        console.error('Autoplay failed:', e)
+      })
+      // Update texture
+      mediaTexture = new THREE.VideoTexture(video)
+      mediaMaterial.map = mediaTexture
+      mediaMaterial.needsUpdate = true
+    })
+
+    // Optionally add the video to DOM
+    // video.style.display = 'none';
+    // document.body.appendChild(video);
+
+    mediaTexture = new THREE.VideoTexture(video)
+  } else {
+    mediaTexture = new THREE.TextureLoader().load(mediaUrl)
+  }
+
+  const mediaMaterial = new THREE.MeshBasicMaterial({
+    map: mediaTexture,
   })
 
-  const paintingGeometry = new THREE.PlaneGeometry(width, height)
-  const painting = new THREE.Mesh(paintingGeometry, paintingMaterial)
+  const mediaGeometry = new THREE.PlaneGeometry(width, height)
+  const mediaMesh = new THREE.Mesh(mediaGeometry, mediaMaterial)
 
-  painting.position.set(position.x, position.y, position.z)
-  painting.castShadow = true
-  painting.receiveShadow = true
+  mediaMesh.position.set(position.x, position.y, position.z)
 
-  // Create a group and add the painting and light to it
+  // Create a group and add the media and light to it
   const group = new THREE.Group()
-  group.add(painting)
+  group.add(mediaMesh)
 
-  // Create a point light to fully illuminate the painting
-  // Create multiple point lights
-  const numLights = 4
-  for (let i = 0; i < numLights; i++) {
-    for (let j = 0; j < numLights; j++) {
-      const pointLight = new THREE.PointLight(0xffffff, 1, 5)
-      const lightX =
-        position.x + (i - (numLights - 1) / 2) * (width / (numLights - 1))
-      const lightY =
-        position.y + (j - (numLights - 1) / 2) * (height / (numLights - 1))
-      const lightZ = position.z + 0.5
-
-      pointLight.position.set(lightX, lightY, lightZ)
-      group.add(pointLight)
-    }
-  }
+  // Set rotation
+  if (rotation === 'left') group.rotation.y = Math.PI / 2
+  if (rotation === 'right') group.rotation.y = -Math.PI / 2
 
   return group
 }
