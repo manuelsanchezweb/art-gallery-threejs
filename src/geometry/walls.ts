@@ -1,27 +1,24 @@
 import * as THREE from 'three'
+import { ASSETS } from '../settings/settings'
 
 interface Object3DWithBBox extends THREE.Object3D {
   BBox?: THREE.Box3
 }
 
-function createLateralWall(
-  xPosition: number,
-  rotationY: number = Math.PI / 2,
-  color: string = 'lightgray'
-): THREE.Mesh {
-  const geometry = new THREE.BoxGeometry(50, 20, 0.001)
-  const material = new THREE.MeshBasicMaterial({ color })
-  const wall = new THREE.Mesh(geometry, material)
-  wall.rotation.y = rotationY
-  wall.position.x = xPosition
-  return wall
-}
+const wallTexture = new THREE.TextureLoader().load(ASSETS.WALLS)
+wallTexture.wrapS = THREE.RepeatWrapping
+wallTexture.wrapT = THREE.RepeatWrapping
+wallTexture.repeat.set(1, 1)
 
 function createCeiling() {
+  const ceilingTexture = new THREE.TextureLoader().load(ASSETS.CEILING)
+  ceilingTexture.wrapS = THREE.RepeatWrapping
+  ceilingTexture.wrapT = THREE.RepeatWrapping
+  ceilingTexture.repeat.set(1, 1)
+
   const geometry = new THREE.PlaneGeometry(50, 50, 32)
   const material = new THREE.MeshBasicMaterial({
-    color: 'gray',
-    side: THREE.DoubleSide,
+    map: ceilingTexture,
   })
   const ceiling = new THREE.Mesh(geometry, material)
   ceiling.rotation.x = Math.PI / 2
@@ -29,24 +26,45 @@ function createCeiling() {
   return ceiling
 }
 
+function createLateralWall(
+  xPosition: number,
+  rotationY: number = Math.PI / 2
+): THREE.Mesh {
+  const geometry = new THREE.BoxGeometry(50, 20, 0.001)
+  const material = new THREE.MeshBasicMaterial({ map: wallTexture })
+  const wall = new THREE.Mesh(geometry, material)
+  wall.rotation.y = rotationY
+  wall.position.x = xPosition
+  return wall
+}
+
 export const createWalls = () => {
   const walls: THREE.Group = new THREE.Group()
 
   const frontWall = new THREE.Mesh(
-    new THREE.BoxGeometry(
-      50, // width
-      20, // height
-      0.001 // depth
-    ),
-
-    new THREE.MeshBasicMaterial({ color: 'lightgray' })
+    new THREE.BoxGeometry(50, 20, 0.001),
+    new THREE.MeshLambertMaterial({ map: wallTexture })
   )
-  frontWall.position.z = -20 // Move wall back - adds depth to scene
+  frontWall.position.z = -20
+
+  const backWall = new THREE.Mesh(
+    new THREE.BoxGeometry(50, 20, 0.001),
+    new THREE.MeshBasicMaterial({ map: wallTexture })
+  )
+  backWall.position.z = 20 // Move wall forward to create depth in opposite direction
 
   const leftWall = createLateralWall(-25)
   const rightWall = createLateralWall(25)
 
-  walls.add(frontWall, leftWall, rightWall)
+  frontWall.castShadow = true
+  backWall.castShadow = true
+  leftWall.castShadow = true
+  rightWall.castShadow = true
+  frontWall.receiveShadow = true
+  backWall.receiveShadow = true
+  leftWall.receiveShadow = true
+  rightWall.receiveShadow = true
+  walls.add(frontWall, backWall, leftWall, rightWall)
 
   // Add bounding boxes to walls
   for (let i = 0; i < walls.children.length; i++) {
