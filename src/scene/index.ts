@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { ARTWORK, cameraSettings } from '../settings/settings'
+import { ARTWORK, WALLS, cameraSettings } from '../settings/settings'
 // import { createCube } from '../geometry/cube'
 import { createAmbientLight } from '../lights/ambientLight'
 import { createSunLight } from '../lights/sunLight'
@@ -34,6 +34,7 @@ export const setupScene = () => {
 
   // Add walls to scene
   const walls = createWalls()
+  walls.name = WALLS
   scene.add(walls)
 
   // Add paintings to scene

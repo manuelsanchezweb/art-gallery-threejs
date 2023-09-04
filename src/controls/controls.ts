@@ -1,39 +1,65 @@
+import * as THREE from 'three'
+
 import { PointerLockControls } from 'three-stdlib'
+import { checkCollision } from './boundaries'
+import { KeysPressed } from '../types/types'
+import { KEYSPRESSED, WALLS } from '../settings/settings'
 
-const MOVEMENT_SPEED = 0.8
+const MOVEMENT_SPEED = 5.0
 
-export const addKeyboardControls = (controls: PointerLockControls) => {
-  function onKeyDown(event: KeyboardEvent) {
-    switch (event.key) {
-      case 'ArrowUp':
-      case 'w':
-        controls.moveForward(MOVEMENT_SPEED)
-        break
-      case 'ArrowDown':
-      case 's':
-        controls.moveForward(-MOVEMENT_SPEED)
-        break
-      case 'ArrowLeft':
-      case 'a':
-        controls.moveRight(-MOVEMENT_SPEED)
-        break
-      case 'ArrowRight':
-      case 'd':
-        controls.moveRight(MOVEMENT_SPEED)
-        break
-      default:
-        break
+export const addKeyboardControls = () => {
+  document.addEventListener('keydown', (event) => {
+    if (event.key in KEYSPRESSED) {
+      KEYSPRESSED[event.key as keyof KeysPressed] = true
     }
-  }
+  })
 
-  document.addEventListener('keydown', onKeyDown)
+  document.addEventListener('keyup', (event) => {
+    if (event.key in KEYSPRESSED) {
+      KEYSPRESSED[event.key as keyof KeysPressed] = false
+    }
+  })
 }
 
-export const addHowToControls = (camera: THREE.Camera) => {
-  const controls = new PointerLockControls(camera, document.body)
+export const updateMovement = (
+  scene: THREE.Scene,
+  delta: number,
+  camera: THREE.Camera,
+  controls: PointerLockControls
+) => {
+  const moveSpeed = MOVEMENT_SPEED * delta
+  const previousPosition = camera.position.clone()
+  const wallsFromScene = scene.getObjectByName(WALLS) as THREE.Group
+
+  if (KEYSPRESSED.w || KEYSPRESSED.ArrowUp) {
+    controls.moveForward(moveSpeed)
+  }
+
+  if (KEYSPRESSED.s || KEYSPRESSED.ArrowDown) {
+    controls.moveForward(-moveSpeed)
+  }
+
+  if (KEYSPRESSED.a || KEYSPRESSED.ArrowLeft) {
+    controls.moveRight(-moveSpeed)
+  }
+
+  if (KEYSPRESSED.d || KEYSPRESSED.ArrowRight) {
+    controls.moveRight(moveSpeed)
+  }
+
+  if (checkCollision(camera, wallsFromScene)) {
+    camera.position.copy(previousPosition)
+  }
+}
+
+export const addHowToControls = (
+  clock: THREE.Clock,
+  controls: PointerLockControls
+) => {
   const playButton = document.getElementById('play_button')
 
   function startExperience() {
+    clock.start()
     controls.lock()
     hideMenu()
   }
@@ -52,7 +78,4 @@ export const addHowToControls = (camera: THREE.Camera) => {
   }
 
   controls.addEventListener('unlock', showMenu)
-
-  // Add keyboard controls
-  addKeyboardControls(controls)
 }
