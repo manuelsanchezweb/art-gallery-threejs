@@ -2,16 +2,24 @@ import * as THREE from 'three'
 
 type Rotation = 'front' | 'left' | 'right' | 'back'
 
-interface MediaProps {
+export interface MediaProps {
+  id: number
   mediaUrl: string
   width: number
   height: number
   rotationSide?: Rotation
   isVideo?: boolean
   position: THREE.Vector3
+  info?: {
+    title: string
+    artist: string
+    description: string
+    year: string
+    link: string
+  }
 }
 
-export function createMedia(props: MediaProps): THREE.Group {
+export function createMedia(props: MediaProps): any {
   const { mediaUrl, width, height, position, rotationSide, isVideo } = props
 
   let mediaTexture
@@ -53,9 +61,25 @@ export function createMedia(props: MediaProps): THREE.Group {
 
   mediaMesh.position.set(position.x, position.y, position.z)
 
+  // Create the boundary box
+  const boundaryGeometry = new THREE.BoxGeometry(width + 1, height + 1, 1) // Adjust the size as needed
+  const boundaryMaterial = new THREE.LineBasicMaterial({ color: 0x00ff00 })
+  const boundaryEdges = new THREE.EdgesGeometry(boundaryGeometry)
+  const boundaryLine = new THREE.LineSegments(boundaryEdges, boundaryMaterial)
+
+  // Position the boundary box
+  boundaryLine.position.set(position.x, position.y, position.z)
+
   // Create a group and add the media and light to it
   const group = new THREE.Group()
+  group.userData = {
+    type: 'media',
+    info: props.info,
+    url: props.info?.link,
+    boundaryMaterial: boundaryMaterial, // Store the boundary material in userData
+  }
   group.add(mediaMesh)
+  group.add(boundaryLine)
 
   // Set rotation
   if (rotation === 'left') group.rotation.y = Math.PI / 2

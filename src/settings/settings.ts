@@ -1,5 +1,8 @@
 import { KeysPressed } from '../types/types'
 
+export const DISTANCE_THRESHOLD = 11
+export const IS_DEBUG_MODE = false
+
 export const cameraSettings = {
   fov: 75,
   aspectRatio: window.innerWidth / window.innerHeight,
