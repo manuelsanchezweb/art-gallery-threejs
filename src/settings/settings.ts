@@ -14,3 +14,8 @@ export const rendererSettings = {
 export const ASSETS = {
   FLOOR: './img/Floor.jpg',
 }
+
+export const ARTWORK = {
+  A0: './artworks/0.jpg',
+  A1: './artworks/1.jpg',
+}

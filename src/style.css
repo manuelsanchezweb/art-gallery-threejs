@@ -45,30 +45,6 @@ canvas {
   display: none;
 }
 
-#menu {
-  width: 40em;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  font-size: 1.2em;
-  border-radius: 0.9em;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
-  overflow: hidden;
-}
-
-#menu .title {
-  padding: 1em;
-  background-color: rgba(52, 58, 125, 0.8);
-  color: #f2c641;
-  border-radius: 0.9em;
-  position: relative;
-  z-index: 2;
-  text-shadow: 2px 2px 0px #f2c641, 4px 4px 0px rgba(0, 0, 0, 0.4);
-  animation: fadeIn 2s ease-in, shadow-pulse 2s infinite;
-}
-
 @keyframes shadow-pulse {
   0% {
     text-shadow: 2px 2px 0px #2323be, 4px 4px 0px rgba(0, 0, 0, 0.4);
@@ -127,16 +103,23 @@ canvas {
 }
 
 #menu {
-  width: 40em;
+  width: 50vw;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  font-size: 1.2em;
+  font-size: 0.95em;
   border-radius: 0.9em;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.6);
   overflow: hidden;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+#menu img {
+  max-height: 200px;
+  width: 100%;
+  object-fit: cover;
 }
 
 #menu .title h1 {

@@ -20,7 +20,7 @@ function createLateralWall(
 function createCeiling() {
   const geometry = new THREE.PlaneGeometry(50, 50, 32)
   const material = new THREE.MeshBasicMaterial({
-    color: 'black',
+    color: 'gray',
     side: THREE.DoubleSide,
   })
   const ceiling = new THREE.Mesh(geometry, material)
@@ -39,9 +39,9 @@ export const createWalls = () => {
       0.001 // depth
     ),
 
-    new THREE.MeshBasicMaterial({ color: 'gray' })
+    new THREE.MeshBasicMaterial({ color: 'lightgray' })
   )
-  frontWall.position.z = -25 // Move wall back - adds depth to scene
+  frontWall.position.z = -20 // Move wall back - adds depth to scene
 
   const leftWall = createLateralWall(-25)
   const rightWall = createLateralWall(25)
