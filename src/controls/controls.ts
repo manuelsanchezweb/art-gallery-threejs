@@ -7,6 +7,10 @@ import { KEYSPRESSED, WALLS } from '../settings/settings'
 
 import nipplejs, { type JoystickManagerOptions } from 'nipplejs'
 import { startAudio, stopAudio } from '../audio/audioGuide'
+import { togglePointerLock } from '../events/eventListeners'
+
+const overlay = document.getElementById('overlay')
+const joystickZone = document.getElementById('zone_joystick') as HTMLElement
 
 const MOVEMENT_SPEED = 8.0
 const JUMP_FORCE = 6.0
@@ -70,6 +74,16 @@ export const addKeyboardControls = (controls: PointerLockControls) => {
 
     if (event.key === 'p') {
       stopAudio()
+    }
+
+    if (event.key === 'i') {
+      togglePointerLock(controls)
+    }
+
+    if (event.key === 'm') {
+      // if the "m" key is pressed
+      showMenuAndOtherOptions()
+      controls.unlock() // unlock the pointer
     }
   })
 
@@ -166,30 +180,19 @@ export const updateMovement = (
   }
 }
 
-export const addHowToControls = (
+export const initGalleryExperience = (
   clock: THREE.Clock,
   controls: PointerLockControls
 ) => {
   const playButton = document.getElementById('play_button')
-  const overlay = document.getElementById('overlay')
-  const joystickZone = document.getElementById('zone_joystick') as HTMLElement
 
   function startExperience() {
     clock.start()
     controls.lock()
-    hideMenu()
-    overlay?.classList.remove('active')
-    joystickZone?.classList.add('active')
-  }
-
-  function showMenuAndOtherOptions() {
-    showMenu()
-    overlay?.classList.add('active')
-    joystickZone?.classList.remove('active')
+    hideMenuAndOtherOptions()
   }
 
   playButton?.addEventListener('click', startExperience)
-  controls.addEventListener('unlock', showMenuAndOtherOptions)
 }
 
 export function hideMenu() {
@@ -202,4 +205,16 @@ export function showMenu() {
   const menu = document.getElementById('menu') as HTMLDivElement
   if (!menu) return
   menu.style.display = 'block'
+}
+
+export function showMenuAndOtherOptions() {
+  showMenu()
+  overlay?.classList.add('active')
+  joystickZone?.classList.remove('active')
+}
+
+export function hideMenuAndOtherOptions() {
+  hideMenu()
+  overlay?.classList.remove('active')
+  joystickZone?.classList.add('active')
 }

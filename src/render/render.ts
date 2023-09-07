@@ -7,7 +7,7 @@ import { setupVR } from '../vr/vrbutton'
 const canvas = document.querySelector('#canvas') as HTMLCanvasElement
 
 // Initialize renderer
-const renderer = new THREE.WebGLRenderer({
+export const renderer = new THREE.WebGLRenderer({
   canvas,
   antialias: false,
 })

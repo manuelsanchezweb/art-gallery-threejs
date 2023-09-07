@@ -1,10 +1,25 @@
+import { PointerLockControls } from 'three-stdlib'
 import { startAudio, stopAudio } from '../audio/audioGuide'
-import { hideMenu, showMenu } from '../controls/controls'
+import {
+  hideMenu,
+  showMenu,
+  showMenuAndOtherOptions,
+} from '../controls/controls'
 
-export function setupEventListeners() {
+let lockPointer = true
+let showMenuOnUnlock = false
+
+export function setupEventListeners(controls: PointerLockControls) {
   handleAboutSectionLogic()
   handleInfoPanelLogic()
   handleAudioLogic()
+
+  controls.addEventListener('unlock', () => {
+    if (showMenuOnUnlock) {
+      showMenuAndOtherOptions()
+    }
+    showMenuOnUnlock = true
+  })
 }
 
 function handleAboutSectionLogic() {
@@ -47,4 +62,15 @@ function handleAudioLogic() {
 
   startAudioButton?.addEventListener('click', startAudio)
   pauseAudioButton?.addEventListener('click', stopAudio)
+}
+
+// toggle the pointer lock
+export function togglePointerLock(controls: PointerLockControls) {
+  if (lockPointer) {
+    controls.lock()
+  } else {
+    showMenuOnUnlock = false
+    controls.unlock()
+  }
+  lockPointer = !lockPointer // toggle the lockPointer variable
 }
