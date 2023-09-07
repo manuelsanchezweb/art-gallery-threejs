@@ -8,7 +8,6 @@ import { createWalls } from '../geometry/walls'
 import { createMedia } from '../geometry/painting'
 import { paintingData } from '../data/paintings'
 import { PointerLockControls } from 'three-stdlib'
-import { setupVR } from '../vr/vrbutton'
 import { createBoundingBoxes } from '../utils/boundingBoxes'
 
 export const setupScene = () => {
@@ -23,7 +22,6 @@ export const setupScene = () => {
   })
   renderer.setSize(window.innerWidth, window.innerHeight)
   renderer.setClearColor(0xffffff, 1)
-  setupVR(renderer)
   document.body.appendChild(renderer.domElement)
 
   const camera = new THREE.PerspectiveCamera(

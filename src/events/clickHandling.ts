@@ -15,6 +15,7 @@ export function setupClickHandling(renderer, camera, paintings) {
     (event: any) => {
       mouse.x = (event.clientX / window.innerWidth) * 2 - 1
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
+
       onClick(camera, paintings)
     },
     false
