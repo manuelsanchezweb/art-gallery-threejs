@@ -163,27 +163,34 @@ export const addHowToControls = (
 ) => {
   const playButton = document.getElementById('play_button')
   const overlay = document.getElementById('overlay')
+  const joystickZone = document.getElementById('zone_joystick') as HTMLElement
 
   function startExperience() {
     clock.start()
     controls.lock()
     hideMenu()
     overlay?.classList.remove('active')
-  }
-  playButton?.addEventListener('click', startExperience)
-
-  function hideMenu() {
-    const menu = document.getElementById('menu') as HTMLDivElement
-    if (!menu) return
-    menu.style.display = 'none'
+    joystickZone?.classList.add('active')
   }
 
-  function showMenu() {
-    const menu = document.getElementById('menu') as HTMLDivElement
-    if (!menu) return
-    menu.style.display = 'block'
+  function showMenuAndOtherOptions() {
+    showMenu()
     overlay?.classList.add('active')
+    joystickZone?.classList.remove('active')
   }
 
-  controls.addEventListener('unlock', showMenu)
+  playButton?.addEventListener('click', startExperience)
+  controls.addEventListener('unlock', showMenuAndOtherOptions)
+}
+
+export function hideMenu() {
+  const menu = document.getElementById('menu') as HTMLDivElement
+  if (!menu) return
+  menu.style.display = 'none'
+}
+
+export function showMenu() {
+  const menu = document.getElementById('menu') as HTMLDivElement
+  if (!menu) return
+  menu.style.display = 'block'
 }

@@ -7,6 +7,8 @@ import {
   addJoystickControls,
   addKeyboardControls,
   addTouchControls,
+  hideMenu,
+  showMenu,
 } from './controls/controls'
 
 import { PointerLockControls } from 'three-stdlib'
@@ -23,3 +25,33 @@ addJoystickControls(clock, controls)
 addTouchControls(controls)
 
 startRendering(scene, clock, camera, controls, paintings)
+
+const toggleInfoButton = document.querySelector(
+  '#toggle-info'
+) as HTMLButtonElement
+const infoPanel = document.querySelector('#info-panel') as HTMLElement
+if (toggleInfoButton && infoPanel) {
+  toggleInfoButton.addEventListener('click', () => {
+    infoPanel.classList.toggle('collapsed')
+    toggleInfoButton.innerText = infoPanel.classList.contains('collapsed')
+      ? 'Show'
+      : 'Hide'
+  })
+}
+
+const aboutButton = document.getElementById('about_button')
+const closeAbout = document.getElementById('close-about')
+const aboutOverlay = document.getElementById('about-overlay')
+const overlay = document.getElementById('overlay')
+
+aboutButton?.addEventListener('click', function () {
+  aboutOverlay?.classList.add('show')
+  overlay?.classList.remove('active')
+  hideMenu()
+})
+
+closeAbout?.addEventListener('click', function () {
+  aboutOverlay?.classList.remove('show')
+  overlay?.classList.add('active')
+  showMenu()
+})
