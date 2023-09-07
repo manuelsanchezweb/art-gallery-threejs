@@ -7,4 +7,6 @@ export interface KeysPressed {
   ArrowDown: boolean
   ArrowLeft: boolean
   ArrowRight: boolean
+  g: boolean
+  p: boolean
 }
