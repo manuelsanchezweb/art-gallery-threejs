@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 import { ARTWORK, PROJECTS } from '../settings/settings'
-import { MediaProps } from '../geometry/painting'
+import { type MediaProps } from '../geometry/painting'
 
 export const paintingData: MediaProps[] = [
   {

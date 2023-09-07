@@ -3,16 +3,16 @@ import * as THREE from 'three'
 const mouse = new THREE.Vector2()
 const raycaster = new THREE.Raycaster()
 
-export function setupClickHandling(
-  renderer: THREE.WebGLRenderer,
-  camera: THREE.PerspectiveCamera,
-  paintings: THREE.Object3D[]
-) {
-  console.log(renderer)
+console.log(mouse, raycaster)
+
+// @ts-ignore
+export function setupClickHandling(renderer, camera, paintings) {
+  console.log(renderer.domElement)
   console.log(paintings)
+
   renderer.domElement.addEventListener(
     'click',
-    (event: MouseEvent) => {
+    (event: any) => {
       mouse.x = (event.clientX / window.innerWidth) * 2 - 1
       mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
       onClick(camera, paintings)
@@ -23,7 +23,7 @@ export function setupClickHandling(
 
 function onClick(camera: THREE.PerspectiveCamera, paintings: THREE.Object3D[]) {
   raycaster.setFromCamera(mouse, camera)
-
+  console.log('hola')
   const intersects = raycaster.intersectObjects(paintings)
   console.log(intersects)
 

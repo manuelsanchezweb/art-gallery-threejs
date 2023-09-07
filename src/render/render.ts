@@ -3,25 +3,14 @@ import { updateMovement } from '../controls/controls'
 import { DISTANCE_THRESHOLD, IS_DEBUG_MODE } from '../settings/settings'
 import { displayPaintingInfo, hidePaintingInfo } from '../ui/infoMedia'
 import { PointerLockControls } from 'three-stdlib'
-import { setupVR } from '../vr/vrbutton'
-const canvas = document.querySelector('#canvas') as HTMLCanvasElement
 
-// Initialize renderer
-export const renderer = new THREE.WebGLRenderer({
-  canvas,
-  antialias: false,
-})
-renderer.setSize(window.innerWidth, window.innerHeight)
-renderer.setClearColor(0xffffff, 1)
-setupVR(renderer)
-document.body.appendChild(renderer.domElement)
-
-export const startRendering = (
+export const setupRendering = (
   scene: THREE.Scene,
   clock: THREE.Clock,
   camera: THREE.PerspectiveCamera,
   controls: PointerLockControls,
-  paintings: THREE.Group[] // replace with the actual type
+  paintings: THREE.Group[], // replace with the actual type
+  renderer: THREE.WebGLRenderer
 ) => {
   function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight

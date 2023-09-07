@@ -66,6 +66,7 @@ function handleAudioLogic() {
 
 // toggle the pointer lock
 export function togglePointerLock(controls: PointerLockControls) {
+  alert('change of pointer lock')
   if (lockPointer) {
     controls.lock()
   } else {

@@ -1,10 +1,6 @@
 import * as THREE from 'three'
 import { ASSETS } from '../settings/settings'
 
-interface Object3DWithBBox extends THREE.Object3D {
-  BBox?: THREE.Box3
-}
-
 const wallTexture = new THREE.TextureLoader().load(ASSETS.WALLS)
 wallTexture.wrapS = THREE.RepeatWrapping
 wallTexture.wrapT = THREE.RepeatWrapping
@@ -64,13 +60,14 @@ export const createWalls = () => {
   backWall.receiveShadow = true
   leftWall.receiveShadow = true
   rightWall.receiveShadow = true
+
   walls.add(frontWall, backWall, leftWall, rightWall)
 
   // Add bounding boxes to walls
-  for (let i = 0; i < walls.children.length; i++) {
-    const object: Object3DWithBBox = walls.children[i] as Object3DWithBBox
-    object.BBox = new THREE.Box3().setFromObject(object)
-  }
+  // for (let i = 0; i < walls.children.length; i++) {
+  //   const object: Object3DWithBBox = walls.children[i] as Object3DWithBBox
+  //   object.BBox = new THREE.Box3().setFromObject(object)
+  // }
 
   const ceiling = createCeiling()
   walls.add(ceiling)
