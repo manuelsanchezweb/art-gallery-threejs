@@ -3,6 +3,7 @@ import { updateMovement } from '../controls/controls'
 import { DISTANCE_THRESHOLD, IS_DEBUG_MODE } from '../settings/settings'
 import { displayPaintingInfo, hidePaintingInfo } from '../ui/infoMedia'
 import { PointerLockControls } from 'three-stdlib'
+import { setupVR } from '../vr/vrbutton'
 const canvas = document.querySelector('#canvas') as HTMLCanvasElement
 
 // Initialize renderer
@@ -12,6 +13,7 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.setClearColor(0xffffff, 1)
+setupVR(renderer)
 document.body.appendChild(renderer.domElement)
 
 export const startRendering = (

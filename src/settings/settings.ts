@@ -22,6 +22,11 @@ export const ASSETS = {
   CEILING: './img/ceiling.jpg',
 }
 
+export const MUSIC = {
+  TIERSEN: './sounds/tiersen.mp3',
+  RELAX: './sounds/relax.mp3',
+}
+
 export const ARTWORK = {
   A0: './artworks/0.jpg',
   A1: './artworks/1.jpg',
@@ -47,4 +52,6 @@ export const KEYSPRESSED: KeysPressed = {
   ArrowDown: false,
   ArrowLeft: false,
   ArrowRight: false,
+  g: false, // start audio
+  p: false, // pause audio
 }

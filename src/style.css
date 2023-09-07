@@ -407,6 +407,10 @@ canvas {
   display: none;
 }
 
+#VRButton {
+  display: none;
+}
+
 @media only screen and (width > 1024px) {
   .only-desktop {
     display: initial;
@@ -414,5 +418,10 @@ canvas {
 
   #menu {
     width: 40vw;
+  }
+
+  #VRButton {
+    display: initial;
+    left: 1% !important;
   }
 }

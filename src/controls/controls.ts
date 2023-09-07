@@ -6,6 +6,7 @@ import { KeysPressed } from '../types/types'
 import { KEYSPRESSED, WALLS } from '../settings/settings'
 
 import nipplejs, { type JoystickManagerOptions } from 'nipplejs'
+import { startAudio, stopAudio } from '../audio/audioGuide'
 
 const MOVEMENT_SPEED = 8.0
 const JUMP_FORCE = 6.0
@@ -61,6 +62,14 @@ export const addKeyboardControls = (controls: PointerLockControls) => {
     if (event.key === ' ' && canJump === true) {
       velocity.y += JUMP_FORCE // Adjust the '20' to set the jump speed.
       canJump = false
+    }
+
+    if (event.key === 'g') {
+      startAudio()
+    }
+
+    if (event.key === 'p') {
+      stopAudio()
     }
   })
 
