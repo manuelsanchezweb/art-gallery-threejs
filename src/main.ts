@@ -2,7 +2,12 @@ import './style.css'
 import * as THREE from 'three'
 
 import { setupScene } from './scene'
-import { addHowToControls, addKeyboardControls } from './controls/controls'
+import {
+  addHowToControls,
+  addJoystickControls,
+  addKeyboardControls,
+  addTouchControls,
+} from './controls/controls'
 
 import { PointerLockControls } from 'three-stdlib'
 import { startRendering } from './render/render'
@@ -14,5 +19,7 @@ const clock = new THREE.Clock()
 
 addHowToControls(clock, controls)
 addKeyboardControls(controls)
+addJoystickControls(clock, controls)
+addTouchControls(controls)
 
 startRendering(scene, clock, camera, controls, paintings)

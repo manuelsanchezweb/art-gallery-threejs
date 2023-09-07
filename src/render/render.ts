@@ -2,10 +2,14 @@ import * as THREE from 'three'
 import { updateMovement } from '../controls/controls'
 import { DISTANCE_THRESHOLD, IS_DEBUG_MODE } from '../settings/settings'
 import { displayPaintingInfo, hidePaintingInfo } from '../ui/infoMedia'
-// import { displayPaintingInfo, hidePaintingInfo } from '../ui/infoPictures'
+import { PointerLockControls } from 'three-stdlib'
+const canvas = document.querySelector('#canvas') as HTMLCanvasElement
 
 // Initialize renderer
-const renderer = new THREE.WebGLRenderer({ antialias: false })
+const renderer = new THREE.WebGLRenderer({
+  canvas,
+  antialias: false,
+})
 renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.setClearColor(0xffffff, 1)
 document.body.appendChild(renderer.domElement)
@@ -14,7 +18,7 @@ export const startRendering = (
   scene: THREE.Scene,
   clock: THREE.Clock,
   camera: THREE.PerspectiveCamera,
-  controls: any, // replace with the actual type
+  controls: PointerLockControls,
   paintings: THREE.Group[] // replace with the actual type
 ) => {
   function onWindowResize() {
