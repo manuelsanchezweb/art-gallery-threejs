@@ -1,34 +1,38 @@
-import * as THREE from "three";
+import * as THREE from 'three'
 
-const mouse = new THREE.Vector2();
-const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2()
+const raycaster = new THREE.Raycaster()
 
-// @ts-ignore
-export function setupClickHandling(renderer, camera, paintings) {
+export function setupClickHandling(
+  renderer: THREE.WebGLRenderer,
+  camera: THREE.PerspectiveCamera,
+  paintings: THREE.Group[]
+) {
   // Updated click event listener
+  console.log(renderer.domElement)
   document.addEventListener(
-    "click",
+    'click',
     (event) => {
       // check if canva is clicked
-      console.log("Clicked canvas");
+      console.log('Clicked canvas')
 
       // Normalize mouse position to [-1, 1] range
-      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
 
       // Raycasting logic
-      raycaster.setFromCamera(mouse, camera);
+      raycaster.setFromCamera(mouse, camera)
       const intersects = raycaster.intersectObjects(
         paintings.map((p) => p.children[0])
-      ); // Extracting mesh from group
+      ) // Extracting mesh from group
 
-      console.log("Intersects:", intersects);
-      console.log("Paintings:", paintings);
+      console.log('Intersects:', intersects)
+      console.log('Paintings:', paintings)
 
       if (intersects.length > 0) {
-        const painting = intersects[0].object;
-        console.log("Clicked painting:", painting.userData.info);
-        window.open(painting.userData.info.link, "_blank");
+        const painting = intersects[0].object
+        console.log('Clicked painting:', painting.userData.info)
+        window.open(painting.userData.info.link, '_blank')
       }
 
       // NOTE: the userData is likely being set on the Group, not the Mesh itself.
@@ -37,9 +41,9 @@ export function setupClickHandling(renderer, camera, paintings) {
       // b. Access the parent's userData when accessing the intersected object: painting.parent.userData.info
     },
     false
-  );
+  )
 }
 // check if clicks are being registered at all when PointerLockControls is deactivated
-document.addEventListener("click", () => {
-  console.log("Document clicked"); // this is printing
-});
+document.addEventListener('click', () => {
+  console.log('Document clicked') // this is printing
+})
