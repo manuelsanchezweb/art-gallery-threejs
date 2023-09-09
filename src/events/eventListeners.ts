@@ -1,77 +1,76 @@
-import { PointerLockControls } from 'three-stdlib'
-import { startAudio, stopAudio } from '../audio/audioGuide'
+import { PointerLockControls } from "three-stdlib";
+import { startAudio, stopAudio } from "../audio/audioGuide";
 import {
   hideMenu,
   showMenu,
   showMenuAndOtherOptions,
-} from '../controls/controls'
+} from "../controls/controls";
 
-let lockPointer = true
-let showMenuOnUnlock = false
+let lockPointer = true;
+let showMenuOnUnlock = false;
 
 export function setupEventListeners(controls: PointerLockControls) {
-  handleAboutSectionLogic()
-  handleInfoPanelLogic()
-  handleAudioLogic()
+  handleAboutSectionLogic();
+  handleInfoPanelLogic();
+  handleAudioLogic();
 
-  controls.addEventListener('unlock', () => {
+  controls.addEventListener("unlock", () => {
     if (showMenuOnUnlock) {
-      showMenuAndOtherOptions()
+      showMenuAndOtherOptions();
     }
-    showMenuOnUnlock = true
-  })
+    showMenuOnUnlock = true;
+  });
 }
 
 function handleAboutSectionLogic() {
-  const aboutButton = document.getElementById('about_button')
-  const closeAbout = document.getElementById('close-about')
-  const aboutOverlay = document.getElementById('about-overlay')
-  const overlay = document.getElementById('overlay')
+  const aboutButton = document.getElementById("about_button");
+  const closeAbout = document.getElementById("close-about");
+  const aboutOverlay = document.getElementById("about-overlay");
+  const overlay = document.getElementById("overlay");
 
-  aboutButton?.addEventListener('click', function () {
-    aboutOverlay?.classList.add('show')
-    overlay?.classList.remove('active')
-    hideMenu()
-  })
+  aboutButton?.addEventListener("click", function () {
+    aboutOverlay?.classList.add("show");
+    overlay?.classList.remove("active");
+    hideMenu();
+  });
 
-  closeAbout?.addEventListener('click', function () {
-    aboutOverlay?.classList.remove('show')
-    overlay?.classList.add('active')
-    showMenu()
-  })
+  closeAbout?.addEventListener("click", function () {
+    aboutOverlay?.classList.remove("show");
+    overlay?.classList.add("active");
+    showMenu();
+  });
 }
 
 function handleInfoPanelLogic() {
   const toggleInfoButton = document.querySelector(
-    '#toggle-info'
-  ) as HTMLButtonElement
-  const infoPanel = document.querySelector('#info-panel') as HTMLElement
+    "#toggle-info"
+  ) as HTMLButtonElement;
+  const infoPanel = document.querySelector("#info-panel") as HTMLElement;
   if (toggleInfoButton && infoPanel) {
-    toggleInfoButton.addEventListener('click', () => {
-      infoPanel.classList.toggle('collapsed')
-      toggleInfoButton.innerText = infoPanel.classList.contains('collapsed')
-        ? 'Show'
-        : 'Hide'
-    })
+    toggleInfoButton.addEventListener("click", () => {
+      infoPanel.classList.toggle("collapsed");
+      toggleInfoButton.innerText = infoPanel.classList.contains("collapsed")
+        ? "Show"
+        : "Hide";
+    });
   }
 }
 
 function handleAudioLogic() {
-  const startAudioButton = document.querySelector('#start_audio')
-  const pauseAudioButton = document.querySelector('#stop_audio')
+  const startAudioButton = document.querySelector("#start_audio");
+  const pauseAudioButton = document.querySelector("#stop_audio");
 
-  startAudioButton?.addEventListener('click', startAudio)
-  pauseAudioButton?.addEventListener('click', stopAudio)
+  startAudioButton?.addEventListener("click", startAudio);
+  pauseAudioButton?.addEventListener("click", stopAudio);
 }
 
 // toggle the pointer lock
 export function togglePointerLock(controls: PointerLockControls) {
-  alert('change of pointer lock')
   if (lockPointer) {
-    controls.lock()
+    controls.lock();
   } else {
-    showMenuOnUnlock = false
-    controls.unlock()
+    showMenuOnUnlock = false;
+    controls.unlock();
   }
-  lockPointer = !lockPointer // toggle the lockPointer variable
+  lockPointer = !lockPointer; // toggle the lockPointer variable
 }

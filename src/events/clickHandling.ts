@@ -1,39 +1,45 @@
-import * as THREE from 'three'
+import * as THREE from "three";
 
-const mouse = new THREE.Vector2()
-const raycaster = new THREE.Raycaster()
-
-console.log(mouse, raycaster)
+const mouse = new THREE.Vector2();
+const raycaster = new THREE.Raycaster();
 
 // @ts-ignore
 export function setupClickHandling(renderer, camera, paintings) {
-  console.log(renderer.domElement)
-  console.log(paintings)
+  // Updated click event listener
+  document.addEventListener(
+    "click",
+    (event) => {
+      // check if canva is clicked
+      console.log("Clicked canvas");
 
-  renderer.domElement.addEventListener(
-    'click',
-    (event: any) => {
-      mouse.x = (event.clientX / window.innerWidth) * 2 - 1
-      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
+      // Normalize mouse position to [-1, 1] range
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-      onClick(camera, paintings)
+      // Raycasting logic
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(
+        paintings.map((p) => p.children[0])
+      ); // Extracting mesh from group
+
+      console.log("Intersects:", intersects);
+      console.log("Paintings:", paintings);
+
+      if (intersects.length > 0) {
+        const painting = intersects[0].object;
+        console.log("Clicked painting:", painting.userData.info);
+        window.open(painting.userData.info.link, "_blank");
+      }
+
+      // NOTE: the userData is likely being set on the Group, not the Mesh itself.
+      // You can either:
+      // a. Set the userData directly to the Mesh when creating it. (I changed the code in 'intex.ts')
+      // b. Access the parent's userData when accessing the intersected object: painting.parent.userData.info
     },
     false
-  )
+  );
 }
-
-function onClick(camera: THREE.PerspectiveCamera, paintings: THREE.Object3D[]) {
-  raycaster.setFromCamera(mouse, camera)
-  console.log('hola')
-  const intersects = raycaster.intersectObjects(paintings)
-  console.log(intersects)
-
-  if (intersects.length > 0) {
-    const painting = intersects[0].object
-    console.log(painting)
-
-    // Perform the desired action, e.g., open a modal or redirect to another page
-    console.log('Clicked painting:', painting.userData.info.title)
-    window.open(painting.userData.info.link, '_blank')
-  }
-}
+// check if clicks are being registered at all when PointerLockControls is deactivated
+document.addEventListener("click", () => {
+  console.log("Document clicked"); // this is printing
+});
