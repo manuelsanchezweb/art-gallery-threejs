@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { PointerLockState } from './pointerEventsLock'
 
 const mouse = new THREE.Vector2()
 const raycaster = new THREE.Raycaster()
@@ -14,6 +15,7 @@ export function setupClickHandling(
     'click',
     (event) => {
       // check if canva is clicked
+      if (!PointerLockState.getIsLocked()) return
       console.log('Clicked canvas')
 
       // Normalize mouse position to [-1, 1] range

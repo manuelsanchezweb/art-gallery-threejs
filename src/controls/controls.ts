@@ -7,7 +7,7 @@ import { KEYSPRESSED, WALLS } from '../settings/settings'
 
 import nipplejs, { type JoystickManagerOptions } from 'nipplejs'
 import { startAudio, stopAudio } from '../audio/audioGuide'
-import { togglePointerLock } from '../events/eventListeners'
+import { PointerLockState } from '../events/pointerEventsLock'
 
 const overlay = document.getElementById('overlay')
 const joystickZone = document.getElementById('zone_joystick') as HTMLElement
@@ -59,6 +59,8 @@ export const addJoystickControls = (
 
 export const addKeyboardControls = (controls: PointerLockControls) => {
   document.addEventListener('keydown', (event) => {
+    if (!PointerLockState.getIsLocked()) return
+
     if (event.key in KEYSPRESSED) {
       KEYSPRESSED[event.key as keyof KeysPressed] = true
     }
@@ -76,10 +78,6 @@ export const addKeyboardControls = (controls: PointerLockControls) => {
       stopAudio()
     }
 
-    if (event.key === 'i') {
-      togglePointerLock(controls)
-    }
-
     if (event.key === 'm') {
       // if the "m" key is pressed
       showMenuAndOtherOptions()
@@ -88,6 +86,8 @@ export const addKeyboardControls = (controls: PointerLockControls) => {
   })
 
   document.addEventListener('keyup', (event) => {
+    if (!PointerLockState.getIsLocked()) return
+
     if (event.key in KEYSPRESSED) {
       KEYSPRESSED[event.key as keyof KeysPressed] = false
     }
@@ -151,19 +151,19 @@ export const updateMovement = (
 
   velocity.y += GRAVITY * delta
 
-  if (KEYSPRESSED.w || KEYSPRESSED.ArrowUp) {
+  if (KEYSPRESSED.w || KEYSPRESSED.W || KEYSPRESSED.ArrowUp) {
     controls.moveForward(moveSpeed)
   }
 
-  if (KEYSPRESSED.s || KEYSPRESSED.ArrowDown) {
+  if (KEYSPRESSED.s || KEYSPRESSED.S || KEYSPRESSED.ArrowDown) {
     controls.moveForward(-moveSpeed)
   }
 
-  if (KEYSPRESSED.a || KEYSPRESSED.ArrowLeft) {
+  if (KEYSPRESSED.a || KEYSPRESSED.A || KEYSPRESSED.ArrowLeft) {
     controls.moveRight(-moveSpeed)
   }
 
-  if (KEYSPRESSED.d || KEYSPRESSED.ArrowRight) {
+  if (KEYSPRESSED.d || KEYSPRESSED.D || KEYSPRESSED.ArrowRight) {
     controls.moveRight(moveSpeed)
   }
 
@@ -184,12 +184,12 @@ export const initGalleryExperience = (
   clock: THREE.Clock,
   controls: PointerLockControls
 ) => {
-  const playButton = document.getElementById('play_button')
+  const playButton = document.getElementById('play_button') as HTMLButtonElement
 
   function startExperience() {
+    hideMenuAndOtherOptions()
     clock.start()
     controls.lock()
-    hideMenuAndOtherOptions()
   }
 
   playButton?.addEventListener('click', startExperience)
@@ -208,12 +208,14 @@ export function showMenu() {
 }
 
 export function showMenuAndOtherOptions() {
-  showMenu()
-  overlay?.classList.add('active')
-  joystickZone?.classList.remove('active')
+  setTimeout(() => {
+    showMenu()
+    overlay?.classList.add('active')
+    joystickZone?.classList.remove('active')
+  }, 1000)
 }
 
-export function hideMenuAndOtherOptions() {
+export async function hideMenuAndOtherOptions() {
   hideMenu()
   overlay?.classList.remove('active')
   joystickZone?.classList.add('active')

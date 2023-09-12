@@ -31,7 +31,6 @@ body {
   font-family: 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
     'Lucida Grande', sans-serif;
   background-color: #121212;
-  cursor: url('http://www.rw-designer.com/cursor-view/97756.png') 16 16, auto;
 }
 
 p,
@@ -231,12 +230,12 @@ canvas {
 
 #painting-info {
   position: fixed;
-  top: 20px;
-  left: 20px;
+  top: 40px;
+  left: 10px;
   background-color: rgba(0, 0, 0, 0.7);
   padding: 20px;
   border-radius: 10px;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Helvetica', sans-serif;
   color: #fff;
   width: 300px;
   height: 150px;
@@ -413,7 +412,11 @@ canvas {
 
 @media only screen and (width > 1024px) {
   .only-desktop {
-    display: initial;
+    display: initial !important;
+  }
+
+  .only-mobile {
+    display: none !important;
   }
 
   #menu {
@@ -424,4 +427,35 @@ canvas {
     display: initial;
     left: 1% !important;
   }
+}
+
+#pointer-lock-display {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  background-color: rgba(35, 37, 88, 0.8);
+  color: #f2c641;
+  border: none;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+#cursor {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  border: 3px solid white;
+  background-color: transparent;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 100000;
+  opacity: 0;
+}
+
+#cursor.active {
+  opacity: 1;
 }

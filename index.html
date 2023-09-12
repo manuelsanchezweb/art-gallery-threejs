@@ -7,6 +7,7 @@
     <title>Art Gallery</title>
   </head>
   <body>
+    <div id="pointer-lock-display"></div>
     <div id="overlay" class="overlay active"></div>
     <div class="background_menu">
       <div id="menu">
@@ -86,14 +87,15 @@
       </div>
     </div>
 
-    <div id="audio_controls">
+    <div class="only-desktop" id="audio_controls">
       <button id="start_audio">Press G to Start Audio Guide</button>
       <button id="stop_audio">Press P to Stop Audio Guide</button>
     </div>
 
     <div id="painting-info"></div>
     
-    <div id="zone_joystick"></div>
+    <div class="only-mobile" id="zone_joystick"></div>
+    <div id="cursor"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

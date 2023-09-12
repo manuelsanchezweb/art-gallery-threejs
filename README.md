@@ -30,13 +30,14 @@ If you have any problem with the version, with 18 you should not have any proble
 - [x] Interaction with the pictures when closeness detected
 - [x] Interaction with the pictures when clicking them (url)
 - [x] Responsiveness through a joystick created with nipple.js
-- [ ] TODO: if interactive mode is enabled, character cannot move
-- [ ] TODO: send a feedback to the user to tell in which mode he is (interactive or movement)
-- [ ] TODO: clicking is only enabled if interactive mode is enabled
-- [ ] TODO: only show cursor if interactive mode is enabled
+- [x] if interactive mode is enabled, character cannot move
+- [x] send a feedback to the user to tell in which mode he is (interactive or movement)
+- [x] clicking is only enabled if interactive mode is enabled
+- [x] only show cursor if interactive mode is enabled
 - [ ] TODO: add a model that welcomes you to the gallery
 - [ ] TODO: add some more pictures and replace mock text
 - [ ] TODO: improve the textures of the walls, ceiling and floor
+- [ ] TODO: improve responsiveness, maybe add two nipples
 
 ## YouTube Video
 
