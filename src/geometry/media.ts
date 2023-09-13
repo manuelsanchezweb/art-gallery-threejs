@@ -1,33 +1,15 @@
 import * as THREE from 'three'
+import { MediaProps } from '../types/types'
 
-type Rotation = 'front' | 'left' | 'right' | 'back'
-
-export interface MediaProps {
-  id: number
-  mediaUrl: string
-  width: number
-  height: number
-  rotationSide?: Rotation
-  isVideo?: boolean
-  position: THREE.Vector3
-  info?: {
-    title: string
-    artist: string
-    description: string
-    year: string
-    link: string
-  }
-}
-
-export function createMedia(props: MediaProps): any {
-  const { mediaUrl, width, height, position, rotationSide, isVideo } = props
+export function createMedia(props: MediaProps): THREE.Group {
+  const { mediaSrc, width, height, position, rotationSide, isVideo } = props
 
   let mediaTexture
   let rotation = rotationSide || 'front'
 
   if (isVideo) {
     const video = document.createElement('video')
-    video.src = mediaUrl
+    video.src = mediaSrc
     video.loop = true
     video.muted = true // Optionally mute the video
 
@@ -49,7 +31,7 @@ export function createMedia(props: MediaProps): any {
 
     mediaTexture = new THREE.VideoTexture(video)
   } else {
-    mediaTexture = new THREE.TextureLoader().load(mediaUrl)
+    mediaTexture = new THREE.TextureLoader().load(mediaSrc)
   }
 
   const mediaMaterial = new THREE.MeshBasicMaterial({
@@ -75,7 +57,7 @@ export function createMedia(props: MediaProps): any {
   group.userData = {
     type: 'media',
     info: props.info,
-    url: props.info?.link,
+    onClick: props.onClick,
     boundaryMaterial: boundaryMaterial, // Store the boundary material in userData
   }
   group.add(mediaMesh)

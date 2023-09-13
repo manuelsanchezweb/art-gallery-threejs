@@ -1,22 +1,52 @@
-// Display painting info in the DOM
-const infoElement = document.getElementById('painting-info') // Get the reference
+import { MediaProps } from '../types/types'
 
-export const displayPaintingInfo = (data: any) => {
-  if (!infoElement) return
-  const info = data.info
+// Display media info in the DOM
+const infoPanelElement = document.getElementById('media__info__panel')
+const infoTriggerElement = document.getElementById('media__info__trigger')
 
-  // Set the html content inside info element
-  infoElement.innerHTML = `
-      <h3>${info.title}</h3>
-      <p>Artista: ${info.artist}</p>
-      <p>Descripción: ${info.description}</p>
-      <p>Año: ${info.year}</p>
-    `
-  infoElement.classList.add('show') // Add the 'show' class
+export const displayMediaInfo = (data: MediaProps) => {
+  displayMediaInfoPanel(data)
+  displayMediaInfoTrigger(data)
 }
 
-// Hide painting info in the DOM
-export const hidePaintingInfo = () => {
-  if (!infoElement) return
-  infoElement.classList.remove('show') // Remove the 'show' class
+// Hide Media info in the DOM
+export const hideMediaInfo = () => {
+  hideMediaInfoPanel()
+  hideMediaInfoTrigger()
+}
+
+const displayMediaInfoPanel = (data: MediaProps) => {
+  const info = data.info
+  if (!infoPanelElement || info?.showInfo === false) return
+
+  // Set the html content inside info element
+  infoPanelElement.innerHTML = `
+      <h3>${info?.title}</h3>
+      <p>Artista: ${info?.artist}</p>
+      <p>Descripción: ${info?.description}</p>
+      <p>Año: ${info?.year}</p>
+    `
+  infoPanelElement.classList.add('show') // Add the 'show' class
+}
+
+// Hide Media info in the DOM
+const hideMediaInfoPanel = () => {
+  if (!infoPanelElement) return
+  infoPanelElement.classList.remove('show') // Remove the 'show' class
+}
+
+const displayMediaInfoTrigger = (data: MediaProps) => {
+  const onClickInfo = data.onClick
+  if (!infoTriggerElement || onClickInfo?.showMessage === false) return
+
+  infoTriggerElement.innerHTML = `
+      <h3>${onClickInfo?.message}</h3>
+    `
+  infoTriggerElement.classList.add('show') // Add the 'show' class
+}
+
+// Hide Media info in the DOM
+const hideMediaInfoTrigger = () => {
+  if (!infoTriggerElement) return
+  infoTriggerElement.classList.remove('show') // Remove the 'show' class
 }

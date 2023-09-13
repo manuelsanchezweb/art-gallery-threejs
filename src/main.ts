@@ -1,4 +1,6 @@
-import './style.css'
+import './css/style.css'
+import './css/info-media.css'
+
 import * as THREE from 'three'
 
 import { setupScene } from './scene'
@@ -16,7 +18,7 @@ import { setupClickHandling } from './events/clickHandling'
 import { setupVR } from './vr/vrbutton'
 import { PointerLockState } from './events/pointerEventsLock'
 
-const { scene, camera, paintings, controls, renderer } = setupScene()
+const { scene, camera, mediaElements, controls, renderer } = setupScene()
 
 const clock = new THREE.Clock()
 
@@ -28,9 +30,9 @@ addTouchControls(controls)
 
 setupAudio(camera)
 setupEventListeners(controls)
-setupClickHandling(renderer, camera, paintings)
+setupClickHandling(camera, mediaElements)
 
-setupRendering(scene, clock, camera, controls, paintings, renderer)
+setupRendering(scene, clock, camera, controls, mediaElements, renderer)
 
 setupVR(renderer)
 
