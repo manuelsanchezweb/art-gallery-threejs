@@ -1,44 +1,56 @@
 import * as THREE from 'three'
 
 import { ARTWORK, PROJECTS } from '../settings/settings'
-import { type MediaProps } from '../geometry/painting'
+import { type MediaProps } from '../types/types'
 
-export const paintingData: MediaProps[] = [
+export const mediaData: MediaProps[] = [
   {
     id: 1,
-    mediaUrl: ARTWORK.A0,
+    mediaSrc: ARTWORK.A0,
     width: 10,
     height: 8,
     position: new THREE.Vector3(-10, 4, -19.9),
     info: {
       // info about the painting
-      title: 'Van Gogh',
+      title: 'Van Gogh - Alert',
       artist: 'Vincent van Gogh',
       description:
         'This is one of the masterpieces by Vincent van Gogh, showcasing his unique style and emotional honesty. Artwork perfectly encapsulates his love for the beauty of everyday life.',
       year: `Year 1994`,
-      link: 'https://github.com/theringsofsaturn',
+      showInfo: true,
+    },
+    onClick: {
+      type: 'action',
+      event: "console.log('Clicked the vangiii!')",
+      message: 'Click the vangi to get an alertchen!',
+      showMessage: false,
     },
   },
   {
     id: 2,
-    mediaUrl: ARTWORK.A1,
+    mediaSrc: ARTWORK.A1,
     width: 10,
     height: 5,
     position: new THREE.Vector3(10, 4, -19.9),
     info: {
       // info about the painting
-      title: 'Van Gogh',
+      title: 'Van Gogh - Link',
       artist: 'Vincent van Gogh',
       description:
         'This is one of the masterpieces by Vincent van Gogh, showcasing his unique style and emotional honesty. Artwork perfectly encapsulates his love for the beauty of everyday life.',
       year: `Year 1994`,
-      link: 'https://github.com/theringsofsaturn',
+      showInfo: false,
+    },
+    onClick: {
+      type: 'link',
+      event: 'https://github.com/your-github',
+      message: 'Click here to go to the Github repo!',
+      showMessage: true,
     },
   },
   {
     id: 3,
-    mediaUrl: ARTWORK.A2,
+    mediaSrc: ARTWORK.A2,
     width: 10,
     height: 7,
     position: new THREE.Vector3(6, 4, -24.9),
@@ -50,12 +62,18 @@ export const paintingData: MediaProps[] = [
       description:
         'This is one of the masterpieces by Vincent van Gogh, showcasing his unique style and emotional honesty. Artwork perfectly encapsulates his love for the beauty of everyday life.',
       year: `Year 1994`,
-      link: 'https://github.com/theringsofsaturn',
+      showInfo: false,
+    },
+    onClick: {
+      type: 'link',
+      event: 'https://github.com/manuelsanchez2/melicena',
+      message: 'Click here to go to the Melicena Github Repo!',
+      showMessage: true,
     },
   },
   {
     id: 4,
-    mediaUrl: ARTWORK.A3,
+    mediaSrc: ARTWORK.A3,
     width: 10,
     height: 5,
     position: new THREE.Vector3(-10, 4, -24.9),
@@ -67,12 +85,18 @@ export const paintingData: MediaProps[] = [
       description:
         'This is one of the masterpieces by Vincent van Gogh, showcasing his unique style and emotional honesty. Artwork perfectly encapsulates his love for the beauty of everyday life.',
       year: `Year 1994`,
-      link: 'https://github.com/theringsofsaturn',
+      showInfo: false,
+    },
+    onClick: {
+      type: 'link',
+      event: 'https://github.com/manuelsanchez2/melicena',
+      message: 'Click here to go to the Melicena Github Repo!',
+      showMessage: true,
     },
   },
   {
     id: 5,
-    mediaUrl: ARTWORK.A4,
+    mediaSrc: ARTWORK.A4,
     width: 10,
     height: 8,
     position: new THREE.Vector3(4, 4, -24.9),
@@ -84,12 +108,18 @@ export const paintingData: MediaProps[] = [
       description:
         'This is one of the masterpieces by Vincent van Gogh, showcasing his unique style and emotional honesty. Artwork perfectly encapsulates his love for the beauty of everyday life.',
       year: `Year 1994`,
-      link: 'https://github.com/theringsofsaturn',
+      showInfo: false,
+    },
+    onClick: {
+      type: 'action',
+      event: 'alert',
+      message: 'Click here to use one action!',
+      showMessage: true,
     },
   },
   {
     id: 6,
-    mediaUrl: PROJECTS.P2,
+    mediaSrc: PROJECTS.P2,
     width: 5,
     height: 8,
     position: new THREE.Vector3(15, 4, -24.9),
@@ -102,7 +132,13 @@ export const paintingData: MediaProps[] = [
       description:
         'Esta es una joya de vídeo que hicimos en un día de verano en el que no había mucha gente.',
       year: '2021',
-      link: 'https://github.com/theringsofsaturn',
+      showInfo: false,
+    },
+    onClick: {
+      type: 'link',
+      event: 'https://github.com/manuelsanchez2/melicena',
+      message: 'Click here to go to the Melicena Github Repo!',
+      showMessage: true,
     },
   },
 ]

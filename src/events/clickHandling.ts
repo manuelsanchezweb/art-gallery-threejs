@@ -1,16 +1,16 @@
 import * as THREE from 'three'
 import { PointerLockState } from './pointerEventsLock'
+import { ActionMap, actions } from '../data/actions'
 
 const mouse = new THREE.Vector2()
 const raycaster = new THREE.Raycaster()
 
 export function setupClickHandling(
-  renderer: THREE.WebGLRenderer,
   camera: THREE.PerspectiveCamera,
-  paintings: THREE.Group[]
+  mediaElements: THREE.Group[]
 ) {
   // Updated click event listener
-  console.log(renderer.domElement)
+  // console.log(renderer.domElement)
   document.addEventListener(
     'click',
     (event) => {
@@ -25,27 +25,37 @@ export function setupClickHandling(
       // Raycasting logic
       raycaster.setFromCamera(mouse, camera)
       const intersects = raycaster.intersectObjects(
-        paintings.map((p) => p.children[0])
-      ) // Extracting mesh from group
+        mediaElements.map((p) => p.children[0])
+      )
 
       console.log('Intersects:', intersects)
-      console.log('Paintings:', paintings)
+      console.log('mediaElements:', mediaElements)
 
       if (intersects.length > 0) {
-        const painting = intersects[0].object
-        console.log('Clicked painting:', painting.userData.info)
-        window.open(painting.userData.info.link, '_blank')
-      }
+        const media = intersects[0].object
+        if (!media.userData.onClick) return
 
-      // NOTE: the userData is likely being set on the Group, not the Mesh itself.
-      // You can either:
-      // a. Set the userData directly to the Mesh when creating it. (I changed the code in 'intex.ts')
-      // b. Access the parent's userData when accessing the intersected object: painting.parent.userData.info
+        const mediaOnClickType = media.userData.onClick.type
+        console.log('This is the media clicked', media.userData)
+
+        if (mediaOnClickType === 'link') {
+          window.open(media.userData.onClick.event, '_blank')
+        } else if (mediaOnClickType === 'action') {
+          const actionName = media.userData.onClick.event as keyof ActionMap
+          const action = actions[actionName]
+          // TODO: check if this is killing performance
+          if (action) {
+            action()
+          } else {
+            eval(media.userData.onClick.event)
+          }
+        }
+      }
     },
     false
   )
 }
 // check if clicks are being registered at all when PointerLockControls is deactivated
-document.addEventListener('click', () => {
-  console.log('Document clicked') // this is printing
-})
+// document.addEventListener('click', () => {
+//   console.log('Document clicked') // this is printing
+// })

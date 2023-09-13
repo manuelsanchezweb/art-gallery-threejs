@@ -20,8 +20,6 @@ export class PointerLockState {
       cursorElement
     ) as HTMLElement
 
-    console.log(PointerLockState.displayElement)
-
     // Attach event listeners for pointer lock state change
     document.addEventListener('pointerlockchange', PointerLockState.updateState)
     document.addEventListener(
