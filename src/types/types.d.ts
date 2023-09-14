@@ -25,6 +25,7 @@ export interface MediaProps {
   mediaType: MediaType
   width: number
   height: number
+  depth?: number
   rotationSide?: Rotation
   position: THREE.Vector3
   info?: {
@@ -34,7 +35,7 @@ export interface MediaProps {
     year: string
     showInfo: boolean
   }
-  onClick?: {
+  onClose?: {
     type: OnClickType
     event: string
     message: string

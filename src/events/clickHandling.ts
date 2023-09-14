@@ -33,24 +33,24 @@ export function setupClickHandling(
 
       if (intersects.length > 0) {
         const media = intersects[0].object
-        if (!media.userData.onClick) return
+        if (!media.userData.onClose) return
 
-        const mediaOnClickType = media.userData.onClick.type
+        const mediaonCloseType = media.userData.onClose.type
         console.log('This is the media clicked', media)
 
-        if (mediaOnClickType === 'link') {
-          window.open(media.userData.onClick.event, '_blank')
-        } else if (mediaOnClickType === 'action') {
-          const actionName = media.userData.onClick.event as keyof ActionMap
+        if (mediaonCloseType === 'link') {
+          window.open(media.userData.onClose.event, '_blank')
+        } else if (mediaonCloseType === 'action') {
+          const actionName = media.userData.onClose.event as keyof ActionMap
           const action = actions[actionName]
           // TODO: check if this is killing performance
           if (action) {
             action()
           } else {
-            eval(media.userData.onClick.event)
+            eval(media.userData.onClose.event)
           }
         } else if (
-          mediaOnClickType === 'video' &&
+          mediaonCloseType === 'video' &&
           media.userData.extras?.whenShouldVideoPlay === 'click'
         ) {
           if (!media.parent) return

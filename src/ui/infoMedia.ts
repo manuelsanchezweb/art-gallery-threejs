@@ -36,11 +36,11 @@ const hideMediaInfoPanel = () => {
 }
 
 const displayMediaInfoTrigger = (data: MediaProps) => {
-  const onClickInfo = data.onClick
-  if (!infoTriggerElement || onClickInfo?.showMessage === false) return
+  const onCloseInfo = data.onClose
+  if (!infoTriggerElement || onCloseInfo?.showMessage === false) return
 
   infoTriggerElement.innerHTML = `
-      <h3>${onClickInfo?.message}</h3>
+      <h3>${onCloseInfo?.message}</h3>
     `
   infoTriggerElement.classList.add('show') // Add the 'show' class
 }
@@ -49,4 +49,5 @@ const displayMediaInfoTrigger = (data: MediaProps) => {
 const hideMediaInfoTrigger = () => {
   if (!infoTriggerElement) return
   infoTriggerElement.classList.remove('show') // Remove the 'show' class
+  infoTriggerElement.innerHTML = ''
 }

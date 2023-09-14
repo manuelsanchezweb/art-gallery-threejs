@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-import { ARTWORK, PROJECTS } from '../settings/settings'
+import { ARTWORK, MODELS, PROJECTS } from '../settings/settings'
 import { type MediaProps } from '../types/types'
 
 export const mediaData: MediaProps[] = [
@@ -20,7 +20,7 @@ export const mediaData: MediaProps[] = [
       year: `Year 1994`,
       showInfo: true,
     },
-    onClick: {
+    onClose: {
       type: 'action',
       event: "console.log('Clicked the vangiii!')",
       message: 'Click the vangi to get an alertchen!',
@@ -43,7 +43,7 @@ export const mediaData: MediaProps[] = [
       year: `Year 1994`,
       showInfo: false,
     },
-    onClick: {
+    onClose: {
       type: 'link',
       event: 'https://github.com/your-github',
       message: 'Click here to go to the Github repo!',
@@ -67,7 +67,7 @@ export const mediaData: MediaProps[] = [
       year: `Year 1994`,
       showInfo: false,
     },
-    onClick: {
+    onClose: {
       type: 'link',
       event: 'https://github.com/manuelsanchez2/melicena',
       message: 'Click here to go to the Melicena Github Repo!',
@@ -91,7 +91,7 @@ export const mediaData: MediaProps[] = [
       year: `Year 1994`,
       showInfo: false,
     },
-    onClick: {
+    onClose: {
       type: 'link',
       event: 'https://github.com/manuelsanchez2/melicena',
       message: 'Click here to go to the Melicena Github Repo!',
@@ -103,7 +103,7 @@ export const mediaData: MediaProps[] = [
     mediaSrc: ARTWORK.A4,
     width: 10,
     height: 8,
-    position: new THREE.Vector3(4, 4, -24.9),
+    position: new THREE.Vector3(3, 4, -24.9),
     rotationSide: 'right',
     mediaType: 'img',
     info: {
@@ -115,7 +115,7 @@ export const mediaData: MediaProps[] = [
       year: `Year 1994`,
       showInfo: false,
     },
-    onClick: {
+    onClose: {
       type: 'action',
       event: 'alert',
       message: 'Click here to use one action!',
@@ -124,14 +124,14 @@ export const mediaData: MediaProps[] = [
   },
   {
     id: 6,
-    mediaSrc: PROJECTS.P2,
-    width: 5,
-    height: 8,
-    position: new THREE.Vector3(15, 4, -24.9),
+    mediaSrc: PROJECTS.MELICENA,
+    width: 9,
+    height: 5,
+    position: new THREE.Vector3(15, 1, -24.9),
     rotationSide: 'right',
     mediaType: 'video',
     extras: {
-      whenShouldVideoPlay: 'click',
+      whenShouldVideoPlay: 'close',
     },
     info: {
       // info about the painting
@@ -142,33 +142,34 @@ export const mediaData: MediaProps[] = [
       year: '2021',
       showInfo: false,
     },
-    onClick: {
-      type: 'video',
-      event: '',
-      message: 'Click here to play this beautiful video!',
+    onClose: {
+      type: 'link',
+      event: 'https://github.com/manuelsanchez2/melicena',
+      message: 'Click here to check the repo of Melicena!',
       showMessage: true,
     },
   },
   {
     id: 7,
-    mediaSrc: 'path/to/your/model.glb',
+    mediaSrc: MODELS.STATUE_DAVID,
     mediaType: 'model',
-    width: 10,
-    height: 10,
-    position: new THREE.Vector3(0, 0, -25),
+    width: 8,
+    height: 4,
+    depth: 10,
+    position: new THREE.Vector3(0, 0, -10),
     rotationSide: 'front',
     info: {
-      title: 'My 3D Model',
-      artist: 'Your Name',
-      description: 'This is a 3D model I created.',
+      title: 'This is the statue of David',
+      artist: 'Michelangelo',
+      description: 'This is a 3D model I found.',
       year: '2023',
-      showInfo: false,
+      showInfo: true,
     },
-    onClick: {
-      type: 'link',
-      event: 'https://github.com/your-github',
+    onClose: {
+      type: 'action',
+      event: 'console.log("clicked")',
       message: 'Click here to go to the Github repo!',
-      showMessage: true,
+      showMessage: false,
     },
   },
 ]

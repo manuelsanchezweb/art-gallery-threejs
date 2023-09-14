@@ -39,6 +39,11 @@ export const PROJECTS = {
   P0: './projects/game.png',
   P1: './projects/capcom-advisor.gif',
   P2: './projects/water.mp4',
+  MELICENA: './projects/projects-melicena.mov',
+}
+
+export const MODELS = {
+  STATUE_DAVID: './models/david_statue/scene.gltf',
 }
 
 export const WALLS = 'walls'

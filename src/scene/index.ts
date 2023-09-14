@@ -47,7 +47,7 @@ export const setupScene = () => {
 
   // Add media elements (img and video) to scene
   const mediaElements: THREE.Group[] = []
-  createBoundingBoxes(mediaElements)
+  // createBoundingBoxes(mediaElements)
   const controls = new PointerLockControls(camera, renderer.domElement)
 
   mediaData.forEach((mediaItem) => {
