@@ -10,6 +10,7 @@ export const mediaData: MediaProps[] = [
     width: 10,
     height: 8,
     position: new THREE.Vector3(-10, 4, -19.9),
+    mediaType: 'img',
     info: {
       // info about the painting
       title: 'Van Gogh - Alert',
@@ -32,6 +33,7 @@ export const mediaData: MediaProps[] = [
     width: 10,
     height: 5,
     position: new THREE.Vector3(10, 4, -19.9),
+    mediaType: 'img',
     info: {
       // info about the painting
       title: 'Van Gogh - Link',
@@ -55,6 +57,7 @@ export const mediaData: MediaProps[] = [
     height: 7,
     position: new THREE.Vector3(6, 4, -24.9),
     rotationSide: 'left',
+    mediaType: 'img',
     info: {
       // info about the painting
       title: 'Van Gogh',
@@ -78,6 +81,7 @@ export const mediaData: MediaProps[] = [
     height: 5,
     position: new THREE.Vector3(-10, 4, -24.9),
     rotationSide: 'right',
+    mediaType: 'img',
     info: {
       // info about the painting
       title: 'Van Gogh',
@@ -101,6 +105,7 @@ export const mediaData: MediaProps[] = [
     height: 8,
     position: new THREE.Vector3(4, 4, -24.9),
     rotationSide: 'right',
+    mediaType: 'img',
     info: {
       // info about the painting
       title: 'Van Gogh',
@@ -124,7 +129,10 @@ export const mediaData: MediaProps[] = [
     height: 8,
     position: new THREE.Vector3(15, 4, -24.9),
     rotationSide: 'right',
-    isVideo: true,
+    mediaType: 'video',
+    extras: {
+      whenShouldVideoPlay: 'click',
+    },
     info: {
       // info about the painting
       title: 'La playa de Melicena',
@@ -135,9 +143,31 @@ export const mediaData: MediaProps[] = [
       showInfo: false,
     },
     onClick: {
+      type: 'video',
+      event: '',
+      message: 'Click here to play this beautiful video!',
+      showMessage: true,
+    },
+  },
+  {
+    id: 7,
+    mediaSrc: 'path/to/your/model.glb',
+    mediaType: 'model',
+    width: 10,
+    height: 10,
+    position: new THREE.Vector3(0, 0, -25),
+    rotationSide: 'front',
+    info: {
+      title: 'My 3D Model',
+      artist: 'Your Name',
+      description: 'This is a 3D model I created.',
+      year: '2023',
+      showInfo: false,
+    },
+    onClick: {
       type: 'link',
-      event: 'https://github.com/manuelsanchez2/melicena',
-      message: 'Click here to go to the Melicena Github Repo!',
+      event: 'https://github.com/your-github',
+      message: 'Click here to go to the Github repo!',
       showMessage: true,
     },
   },

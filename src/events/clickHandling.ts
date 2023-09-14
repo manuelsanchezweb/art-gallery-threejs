@@ -36,7 +36,7 @@ export function setupClickHandling(
         if (!media.userData.onClick) return
 
         const mediaOnClickType = media.userData.onClick.type
-        console.log('This is the media clicked', media.userData)
+        console.log('This is the media clicked', media)
 
         if (mediaOnClickType === 'link') {
           window.open(media.userData.onClick.event, '_blank')
@@ -48,6 +48,20 @@ export function setupClickHandling(
             action()
           } else {
             eval(media.userData.onClick.event)
+          }
+        } else if (
+          mediaOnClickType === 'video' &&
+          media.userData.extras?.whenShouldVideoPlay === 'click'
+        ) {
+          if (!media.parent) return
+          const videoElement: HTMLVideoElement =
+            media.parent.userData.videoElement
+          if (videoElement.paused) {
+            videoElement.play().catch((error) => {
+              console.error('Video play failed:', error)
+            })
+          } else {
+            videoElement.pause()
           }
         }
       }
