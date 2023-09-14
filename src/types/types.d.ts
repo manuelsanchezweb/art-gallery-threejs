@@ -16,14 +16,17 @@ export interface KeysPressed {
 }
 
 type Rotation = 'front' | 'left' | 'right' | 'back'
+type MediaType = 'img' | 'video' | 'iframe' | 'model'
+type OnClickType = 'link' | 'action' | 'video'
 
 export interface MediaProps {
   id: number
   mediaSrc: string
+  mediaType: MediaType
   width: number
   height: number
+  depth?: number
   rotationSide?: Rotation
-  isVideo?: boolean
   position: THREE.Vector3
   info?: {
     title: string
@@ -32,10 +35,13 @@ export interface MediaProps {
     year: string
     showInfo: boolean
   }
-  onClick?: {
-    type: 'link' | 'action' | 'video'
+  onClose?: {
+    type: OnClickType
     event: string
     message: string
     showMessage: boolean
+  }
+  extras?: {
+    whenShouldVideoPlay: 'default' | 'close' | 'click'
   }
 }

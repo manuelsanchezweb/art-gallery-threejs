@@ -1,0 +1,11 @@
+Model Information:
+* title:	David Statue
+* source:	https://sketchfab.com/3d-models/david-statue-f0e3d5b992d54d159ee26003e239b972
+* author:	Filip (https://sketchfab.com/filip.hans.nyberg)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "David Statue" (https://sketchfab.com/3d-models/david-statue-f0e3d5b992d54d159ee26003e239b972) by Filip (https://sketchfab.com/filip.hans.nyberg) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
