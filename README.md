@@ -34,12 +34,13 @@ If you have any problem with the version, with 18 you should not have any proble
 - [x] send a feedback to the user to tell in which mode he is (interactive or movement)
 - [x] clicking is only enabled if interactive mode is enabled
 - [x] only show cursor if interactive mode is enabled
+- [x] add video handling possibility. Play by 'default', 'click' or 'close'
+- [x] add og images for displaying cool thumbnails
 - [ ] TODO: add a model that welcomes you to the gallery
 - [ ] TODO: add some more pictures and replace mock text
 - [ ] TODO: improve the textures of the walls, ceiling and floor
 - [ ] TODO: improve responsiveness, maybe add two nipples
 - [ ] TODO: add postcss and bring a bit of order to the css chaos
-- [x] TODO: add video handling possibility. Play by 'default', 'click' or 'close'
 
 ## YouTube Video
 

@@ -166,10 +166,10 @@ export const mediaData: MediaProps[] = [
       showInfo: true,
     },
     onClose: {
-      type: 'action',
-      event: 'console.log("clicked")',
-      message: 'Click here to go to the Github repo!',
-      showMessage: false,
+      type: 'link',
+      event: 'https://en.wikipedia.org/wiki/David_(Michelangelo)',
+      message: 'Click here to learn more about David!',
+      showMessage: true,
     },
   },
 ]
