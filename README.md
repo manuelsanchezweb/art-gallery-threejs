@@ -38,8 +38,8 @@ If you have any problem with the version, with 18 you should not have any proble
 - [x] add og images for displaying cool thumbnails
 - [x] add a model that welcomes you to the gallery
 - [ ] TODO: add some more pictures and replace mock text
-- [ ] TODO: improve the textures of the walls, ceiling and floor
-- [ ] TODO: improve responsiveness, maybe add two nipples
+- [x] improve the textures of the walls, ceiling and floor
+- [x] TODO: improve responsiveness
 - [ ] TODO: add postcss and bring a bit of order to the css chaos
 
 ## YouTube Video
