@@ -46,6 +46,34 @@ export const MODELS = {
   STATUE_DAVID: './models/david_statue/scene.gltf',
 }
 
+export const CEILING_TEXTURES = {
+  COLOR: './textures/OfficeCeiling005_1K-JPG/OfficeCeiling005_1K-JPG_Color.jpg',
+  DISPLACEMENT:
+    './textures/OfficeCeiling005_1K-JPG/OfficeCeiling005_1K-JPG_Displacement.jpg',
+  AO: './textures/OfficeCeiling005_1K-JPG/OfficeCeiling005_1K-JPG_AmbientOcclusion.jpg',
+  EMISSION:
+    './textures/OfficeCeiling005_1K-JPG/OfficeCeiling005_1K-JPG_Emission.jpg',
+  METALNESS:
+    './textures/OfficeCeiling005_1K-JPG/OfficeCeiling005_1K-JPG_Metalness.jpg',
+  NORMAL_GL:
+    './textures/OfficeCeiling005_1K-JPG/OfficeCeiling005_1K-JPG_NormalGL.jpg',
+  ROUGHNESS:
+    './textures/OfficeCeiling005_1K-JPG/OfficeCeiling005_1K-JPG_Roughness.jpg',
+}
+
+export const WALLS_TEXTURES = {
+  DIFF: './textures/walls/leather_white_diff_4k.jpg',
+  ROUGH: './textures/walls/leather_white_rough_4k.jpg',
+}
+
+export const FLOOR_TEXTURES = {
+  COLOR: './textures/wood_floor/WoodFloor040_1K-JPG_Color.jpg',
+  DISPLACEMENT: './textures/wood_floor/WoodFloor040_1K-JPG_Displacement.jpg',
+  NORMAL: './textures/wood_floor/WoodFloor040_1K-JPG_NormalGL.jpg',
+  ROUGHNESS: './textures/wood_floor/WoodFloor040_1K-JPG_Roughness.jpg',
+  AO: './textures/wood_floor/WoodFloor040_1K-JPG_AmbientOcclusion.jpg',
+}
+
 export const WALLS = 'walls'
 export const MEDIA = 'media'
 

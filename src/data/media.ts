@@ -156,11 +156,11 @@ export const mediaData: MediaProps[] = [
     width: 8,
     height: 1, // TODO: talk about this
     depth: 1,
-    position: new THREE.Vector3(0, 1, -10),
+    position: new THREE.Vector3(0, 0, -8),
     rotationSide: 'front',
     lighting: {
       type: 'directional',
-      intensity: 0.5,
+      intensity: 0.2,
       color: 0xffffff,
       position: new THREE.Vector3(0, 1, -12),
     },

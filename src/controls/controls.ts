@@ -118,7 +118,10 @@ let joystick = nipplejs.create(joystickOptions)
 
 const setupJoystickEvents = (
   controls: PointerLockControls,
-  moveSpeed: number
+  moveSpeed: number,
+  camera: THREE.Camera,
+  wallsFromScene: THREE.Group,
+  mediaElements: THREE.Group[]
 ) => {
   if (joystickInitialized) return
 
@@ -127,11 +130,12 @@ const setupJoystickEvents = (
   try {
     joystick.on('hidden', function () {
       // your existing logic here...
-      console.log('hidden')
+      console.log(moveSpeed)
     })
 
     joystick.on('move', function (_evt, data) {
       const speed = 0.2
+      const previousPosition = camera.position.clone() // Save previous position
 
       if (data.angle.degree > 45 && data.angle.degree < 135) {
         // move forward
@@ -147,7 +151,15 @@ const setupJoystickEvents = (
         controls.moveRight(-speed)
       }
 
-      controls.moveForward(moveSpeed) // Test value
+      if (checkCollision(camera, wallsFromScene)) {
+        camera.position.copy(previousPosition)
+      }
+
+      mediaElements.forEach((mediaGroup) => {
+        if (checkCollision(camera, mediaGroup)) {
+          camera.position.copy(previousPosition)
+        }
+      })
     })
 
     joystick.on('end', function () {
@@ -180,7 +192,13 @@ export const updateMovement = (
 
   velocity.y += GRAVITY * delta
 
-  setupJoystickEvents(controls, moveSpeed)
+  setupJoystickEvents(
+    controls,
+    moveSpeed,
+    camera,
+    wallsFromScene,
+    mediaElements
+  )
 
   if (KEYSPRESSED.w || KEYSPRESSED.W || KEYSPRESSED.ArrowUp) {
     controls.moveForward(moveSpeed)
