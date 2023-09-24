@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { WALLS, cameraSettings } from '../settings/settings'
+import { IS_DEBUG_MODE, WALLS, cameraSettings } from '../settings/settings'
 
 import { createAmbientLight } from '../lights/ambientLight'
 import { createSunLight } from '../lights/sunLight'
@@ -10,6 +10,7 @@ import { mediaData } from '../data/media'
 import { PointerLockControls } from 'three-stdlib'
 import { createBoundingBoxes } from '../utils/boundingBoxes'
 import { createCustomLight } from '../lights/utils'
+import { createCeiling } from '../geometry/ceiling'
 
 export const setupScene = () => {
   const scene = new THREE.Scene()
@@ -46,6 +47,10 @@ export const setupScene = () => {
   walls.name = WALLS
   scene.add(walls)
 
+  // Add ceiling to scene
+  const ceiling = createCeiling()
+  scene.add(ceiling)
+
   // Add media elements (img and video) to scene
   const mediaElements: THREE.Group[] = []
   // createBoundingBoxes(mediaElements)
@@ -68,15 +73,26 @@ export const setupScene = () => {
     mediaElements.push(media) // add to mediaElements array
   })
 
-  // const debugMaterial = new THREE.LineBasicMaterial({ color: 0xff0000 })
-  // const debugGeometry = new THREE.BufferGeometry().setFromPoints([
-  //   raycaster.ray.origin,
-  //   raycaster.ray.origin
-  //     .clone()
-  //     .add(raycaster.ray.direction.multiplyScalar(100)),
-  // ])
-  // const debugLine = new THREE.Line(debugGeometry, debugMaterial)
-  // scene.add(debugLine)
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1)
+  directionalLight.position.set(20, 7, 5)
+  directionalLight.castShadow = true
+  const directionalLight2 = new THREE.DirectionalLight(0xffffff, 1)
+  directionalLight2.position.set(-20, 7, 5)
+  directionalLight2.castShadow = true
+
+  scene.add(directionalLight)
+  scene.add(directionalLight2)
+
+  if (IS_DEBUG_MODE) {
+    const directionalLightHelper = new THREE.DirectionalLightHelper(
+      directionalLight
+    )
+    const directionalLightHelper2 = new THREE.DirectionalLightHelper(
+      directionalLight2
+    )
+    scene.add(directionalLightHelper)
+    scene.add(directionalLightHelper2)
+  }
 
   return { scene, camera, mediaElements, controls, renderer }
 }
