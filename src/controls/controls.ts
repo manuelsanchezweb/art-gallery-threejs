@@ -24,46 +24,6 @@ let lastTouchX = 0
 let lastTouchY = 0
 const touchSensitivity = 0.8
 
-/**
- * Adds joystick-based movement controls to the scene.
- * @param clock - Three.js clock instance for time-based movement.
- * @param controls - PointerLockControls instance for movement.
- */
-export const addJoystickMovementControls = (
-  clock: THREE.Clock,
-  controls: PointerLockControls
-) => {
-  const joystickOptions: JoystickManagerOptions = {
-    zone: joystickZoneMovement, // active zone
-    mode: 'static',
-    size: 100, // size of joystick
-    position: { left: '50%', top: '50%' },
-  }
-  const joystick = nipplejs.create(joystickOptions)
-
-  joystick.on('move', function (_evt, data) {
-    const moveSpeed = MOVEMENT_SPEED * 2 * clock.getDelta() // Ensure delta is accessible here
-
-    if (data.angle.degree > 45 && data.angle.degree < 135) {
-      // move forward
-      controls.moveForward(moveSpeed)
-    } else if (data.angle.degree > 225 && data.angle.degree < 315) {
-      // move backward
-      controls.moveForward(-moveSpeed)
-    } else if (data.angle.degree <= 45 || data.angle.degree >= 315) {
-      // move right
-      controls.moveRight(moveSpeed)
-    } else if (data.angle.degree >= 135 && data.angle.degree <= 225) {
-      // move left
-      controls.moveRight(-moveSpeed)
-    }
-  })
-
-  joystick.on('end', function () {
-    // stop movement, if needed
-  })
-}
-
 export const addKeyboardControls = (controls: PointerLockControls) => {
   document.addEventListener('keydown', (event) => {
     if (!PointerLockState.getIsLocked()) return
@@ -146,6 +106,57 @@ export const addTouchControls = (controls: PointerLockControls) => {
   )
 }
 
+let joystickInitialized = false
+const joystickOptions: JoystickManagerOptions = {
+  zone: joystickZoneMovement, // active zone
+  mode: 'semi',
+  size: 100, // size of joystick
+  position: { left: '50%', top: '50%' },
+  restOpacity: 0.8,
+}
+let joystick = nipplejs.create(joystickOptions)
+
+const setupJoystickEvents = (
+  controls: PointerLockControls,
+  moveSpeed: number
+) => {
+  if (joystickInitialized) return
+
+  joystickInitialized = true
+
+  try {
+    joystick.on('hidden', function () {
+      // your existing logic here...
+      console.log('hidden')
+    })
+
+    joystick.on('move', function (_evt, data) {
+      const speed = 0.2
+
+      if (data.angle.degree > 45 && data.angle.degree < 135) {
+        // move forward
+        controls.moveForward(speed)
+      } else if (data.angle.degree > 225 && data.angle.degree < 315) {
+        // move backward
+        controls.moveForward(-speed)
+      } else if (data.angle.degree <= 45 || data.angle.degree >= 315) {
+        // move right
+        controls.moveRight(speed)
+      } else if (data.angle.degree >= 135 && data.angle.degree <= 225) {
+        // move left
+        controls.moveRight(-speed)
+      }
+
+      controls.moveForward(moveSpeed) // Test value
+    })
+
+    joystick.on('end', function () {
+      // your existing logic here...
+    })
+  } catch (error) {
+    console.error('An error occurred in the joystick logic: ', error)
+  }
+}
 /**
  * Updates the camera position and checks for collisions.
  * @param scene - Three.js scene instance.
@@ -168,6 +179,8 @@ export const updateMovement = (
   ) as THREE.Group[]
 
   velocity.y += GRAVITY * delta
+
+  setupJoystickEvents(controls, moveSpeed)
 
   if (KEYSPRESSED.w || KEYSPRESSED.W || KEYSPRESSED.ArrowUp) {
     controls.moveForward(moveSpeed)
