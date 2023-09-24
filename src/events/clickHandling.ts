@@ -16,7 +16,6 @@ export function setupClickHandling(
     (event) => {
       // check if canva is clicked
       if (!PointerLockState.getIsLocked()) return
-      console.log('Clicked canvas')
 
       // Normalize mouse position to [-1, 1] range
       mouse.x = (event.clientX / window.innerWidth) * 2 - 1
@@ -24,6 +23,7 @@ export function setupClickHandling(
 
       // Raycasting logic
       raycaster.setFromCamera(mouse, camera)
+
       const intersects = raycaster.intersectObjects(
         mediaElements.map((p) => p.children[0])
       )

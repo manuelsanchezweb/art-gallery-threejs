@@ -36,7 +36,7 @@ If you have any problem with the version, with 18 you should not have any proble
 - [x] only show cursor if interactive mode is enabled
 - [x] add video handling possibility. Play by 'default', 'click' or 'close'
 - [x] add og images for displaying cool thumbnails
-- [ ] TODO: add a model that welcomes you to the gallery
+- [x] add a model that welcomes you to the gallery
 - [ ] TODO: add some more pictures and replace mock text
 - [ ] TODO: improve the textures of the walls, ceiling and floor
 - [ ] TODO: improve responsiveness, maybe add two nipples

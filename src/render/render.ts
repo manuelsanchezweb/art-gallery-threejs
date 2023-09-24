@@ -63,7 +63,7 @@ export const setupRendering = (
       const boundaryMaterial = closestMediaUserData.boundaryMaterial
       displayMediaInfo(closestMediaUserData)
 
-      if (boundaryMaterial) {
+      if (boundaryMaterial && IS_DEBUG_MODE) {
         boundaryMaterial.color.set(0xff0000) // Set to red
         boundaryMaterial.opacity = 1 // Reset opacity to 1
         boundaryMaterial.transparent = false // Disable transparency
@@ -91,6 +91,11 @@ export const setupRendering = (
         }
       })
     }
+
+    // @ts-ignore
+    renderer.gammaOutput = true
+    // @ts-ignore
+    renderer.gammaFactor = 2.2
 
     renderer.render(scene, camera)
     requestAnimationFrame(animate)

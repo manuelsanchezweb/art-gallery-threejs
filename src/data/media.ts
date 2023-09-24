@@ -154,9 +154,9 @@ export const mediaData: MediaProps[] = [
     mediaSrc: MODELS.STATUE_DAVID,
     mediaType: 'model',
     width: 8,
-    height: 4,
-    depth: 10,
-    position: new THREE.Vector3(0, 0, -10),
+    height: 0, // TODO: talk about this
+    depth: 1,
+    position: new THREE.Vector3(0, 1, -10),
     rotationSide: 'front',
     info: {
       title: 'This is the statue of David',

@@ -55,9 +55,21 @@ export const setupScene = () => {
 
     media.children[0].userData = mediaItem // Add painting info to mesh
 
+    console.log('mediaItem', mediaItem)
+
     scene.add(media)
     mediaElements.push(media) // add to mediaElements array
   })
+
+  // const debugMaterial = new THREE.LineBasicMaterial({ color: 0xff0000 })
+  // const debugGeometry = new THREE.BufferGeometry().setFromPoints([
+  //   raycaster.ray.origin,
+  //   raycaster.ray.origin
+  //     .clone()
+  //     .add(raycaster.ray.direction.multiplyScalar(100)),
+  // ])
+  // const debugLine = new THREE.Line(debugGeometry, debugMaterial)
+  // scene.add(debugLine)
 
   return { scene, camera, mediaElements, controls, renderer }
 }

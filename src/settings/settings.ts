@@ -1,7 +1,7 @@
 import { KeysPressed } from '../types/types'
 
+export const IS_DEBUG_MODE = false
 export const DISTANCE_THRESHOLD = 11
-export const IS_DEBUG_MODE = true
 
 export const cameraSettings = {
   fov: 75,
