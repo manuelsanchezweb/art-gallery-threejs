@@ -47,6 +47,7 @@ export const MODELS = {
 }
 
 export const WALLS = 'walls'
+export const MEDIA = 'media'
 
 export const KEYSPRESSED: KeysPressed = {
   w: false,

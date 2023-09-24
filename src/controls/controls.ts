@@ -3,14 +3,16 @@ import * as THREE from 'three'
 import { PointerLockControls } from 'three-stdlib'
 import { checkCollision } from './boundaries'
 import { KeysPressed } from '../types/types'
-import { KEYSPRESSED, WALLS } from '../settings/settings'
+import { KEYSPRESSED, MEDIA, WALLS } from '../settings/settings'
 
 import nipplejs, { type JoystickManagerOptions } from 'nipplejs'
 import { startAudio, stopAudio } from '../audio/audioGuide'
 import { PointerLockState } from '../events/pointerEventsLock'
 
 const overlay = document.getElementById('overlay')
-const joystickZone = document.getElementById('zone_joystick') as HTMLElement
+const joystickZoneMovement = document.getElementById(
+  'zone_joystick-movement'
+) as HTMLElement
 
 const MOVEMENT_SPEED = 8.0
 const JUMP_FORCE = 6.0
@@ -22,12 +24,17 @@ let lastTouchX = 0
 let lastTouchY = 0
 const touchSensitivity = 0.8
 
-export const addJoystickControls = (
+/**
+ * Adds joystick-based movement controls to the scene.
+ * @param clock - Three.js clock instance for time-based movement.
+ * @param controls - PointerLockControls instance for movement.
+ */
+export const addJoystickMovementControls = (
   clock: THREE.Clock,
   controls: PointerLockControls
 ) => {
   const joystickOptions: JoystickManagerOptions = {
-    zone: document.getElementById('zone_joystick') as HTMLElement, // active zone
+    zone: joystickZoneMovement, // active zone
     mode: 'static',
     size: 100, // size of joystick
     position: { left: '50%', top: '50%' },
@@ -139,6 +146,13 @@ export const addTouchControls = (controls: PointerLockControls) => {
   )
 }
 
+/**
+ * Updates the camera position and checks for collisions.
+ * @param scene - Three.js scene instance.
+ * @param delta - Time delta for movements.
+ * @param camera - Camera for the view.
+ * @param controls - PointerLockControls for handling movements.
+ */
 export const updateMovement = (
   scene: THREE.Scene,
   delta: number,
@@ -148,6 +162,10 @@ export const updateMovement = (
   const moveSpeed = MOVEMENT_SPEED * delta
   const previousPosition = camera.position.clone()
   const wallsFromScene = scene.getObjectByName(WALLS) as THREE.Group
+  const mediaElements = scene.getObjectsByProperty(
+    'name',
+    MEDIA
+  ) as THREE.Group[]
 
   velocity.y += GRAVITY * delta
 
@@ -172,6 +190,12 @@ export const updateMovement = (
   if (checkCollision(camera, wallsFromScene)) {
     camera.position.copy(previousPosition)
   }
+
+  mediaElements.forEach((mediaGroup) => {
+    if (checkCollision(camera, mediaGroup)) {
+      camera.position.copy(previousPosition)
+    }
+  })
 
   if (controls.getObject().position.y <= 0) {
     velocity.y = 0
@@ -211,12 +235,12 @@ export function showMenuAndOtherOptions() {
   setTimeout(() => {
     showMenu()
     overlay?.classList.add('active')
-    joystickZone?.classList.remove('active')
+    joystickZoneMovement?.classList.remove('active')
   }, 1000)
 }
 
 export async function hideMenuAndOtherOptions() {
   hideMenu()
   overlay?.classList.remove('active')
-  joystickZone?.classList.add('active')
+  joystickZoneMovement?.classList.add('active')
 }

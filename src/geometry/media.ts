@@ -50,6 +50,7 @@ export function createMedia(props: MediaProps): THREE.Group {
     onClose: props.onClose,
     boundaryMaterial: boundaryMaterial, // Store the boundary material in userData
     extras: props.extras,
+    lighting: props.lighting,
   }
 
   let mediaTexture
@@ -97,6 +98,12 @@ export function createMedia(props: MediaProps): THREE.Group {
 
         model.scale.set(scaleFactor, scaleFactor, scaleFactor)
         model.position.set(position.x, position.y, position.z)
+
+        // Create and add the bounding box to the model
+        const boundingBox = new THREE.Box3()
+        boundingBox.setFromObject(model)
+        model.userData = { ...model.userData, boundingBox }
+        console.log('Model bounding box:', boundingBox)
 
         group.add(model)
 

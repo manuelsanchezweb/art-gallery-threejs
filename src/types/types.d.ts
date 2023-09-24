@@ -18,6 +18,14 @@ export interface KeysPressed {
 type Rotation = 'front' | 'left' | 'right' | 'back'
 type MediaType = 'img' | 'video' | 'iframe' | 'model'
 type OnClickType = 'link' | 'action' | 'video'
+type LightType = 'spot' | 'point' | 'directional'
+
+export type LightSettings = {
+  type: LightType
+  intensity: number
+  color: number
+  position: THREE.Vector3
+}
 
 export interface MediaProps {
   id: number
@@ -28,6 +36,7 @@ export interface MediaProps {
   depth?: number
   rotationSide?: Rotation
   position: THREE.Vector3
+  lighting?: LightSettings
   info?: {
     title: string
     artist: string

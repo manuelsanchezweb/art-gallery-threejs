@@ -5,7 +5,7 @@ import * as THREE from 'three'
 
 import { setupScene } from './scene'
 import {
-  addJoystickControls,
+  addJoystickMovementControls,
   addKeyboardControls,
   addTouchControls,
   initGalleryExperience,
@@ -25,7 +25,7 @@ const clock = new THREE.Clock()
 initGalleryExperience(clock, controls)
 
 addKeyboardControls(controls)
-addJoystickControls(clock, controls)
+addJoystickMovementControls(clock, controls)
 addTouchControls(controls)
 
 setupAudio(camera)

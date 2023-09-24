@@ -154,10 +154,16 @@ export const mediaData: MediaProps[] = [
     mediaSrc: MODELS.STATUE_DAVID,
     mediaType: 'model',
     width: 8,
-    height: 0, // TODO: talk about this
+    height: 1, // TODO: talk about this
     depth: 1,
     position: new THREE.Vector3(0, 1, -10),
     rotationSide: 'front',
+    lighting: {
+      type: 'directional',
+      intensity: 0.5,
+      color: 0xffffff,
+      position: new THREE.Vector3(0, 1, -12),
+    },
     info: {
       title: 'This is the statue of David',
       artist: 'Michelangelo',

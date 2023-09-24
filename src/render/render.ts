@@ -4,12 +4,21 @@ import { DISTANCE_THRESHOLD, IS_DEBUG_MODE } from '../settings/settings'
 import { displayMediaInfo, hideMediaInfo } from '../ui/infoMedia'
 import { PointerLockControls } from 'three-stdlib'
 
+/**
+ * Sets up the rendering logic including resizing and animation.
+ * @param scene - Three.js scene instance.
+ * @param clock - Three.js clock instance for time-based actions.
+ * @param camera - Camera for rendering the scene.
+ * @param controls - PointerLockControls for handling movements.
+ * @param mediaElements - Array of media elements.
+ * @param renderer - WebGL renderer.
+ */
 export const setupRendering = (
   scene: THREE.Scene,
   clock: THREE.Clock,
   camera: THREE.PerspectiveCamera,
   controls: PointerLockControls,
-  mediaElements: THREE.Group[], // replace with the actual type
+  mediaElements: THREE.Group[],
   renderer: THREE.WebGLRenderer
 ) => {
   function onWindowResize() {

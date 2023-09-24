@@ -9,6 +9,7 @@ import { createMedia } from '../geometry/media'
 import { mediaData } from '../data/media'
 import { PointerLockControls } from 'three-stdlib'
 import { createBoundingBoxes } from '../utils/boundingBoxes'
+import { createCustomLight } from '../lights/utils'
 
 export const setupScene = () => {
   const scene = new THREE.Scene()
@@ -52,10 +53,16 @@ export const setupScene = () => {
 
   mediaData.forEach((mediaItem) => {
     const media = createMedia(mediaItem)
+    media.name = 'media'
 
     media.children[0].userData = mediaItem // Add painting info to mesh
 
-    console.log('mediaItem', mediaItem)
+    if (mediaItem.lighting) {
+      const customLight = createCustomLight(mediaItem.lighting)
+      scene.add(customLight)
+    }
+
+    createBoundingBoxes(mediaElements)
 
     scene.add(media)
     mediaElements.push(media) // add to mediaElements array
